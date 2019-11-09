@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Welcome from './welcome';
+import { App } from './app';
 
-ReactDOM.render(
-    <HelloWorld />,
-    document.querySelector('main')
-);
+let elem;
+const userIsLoggedIn = location.pathname != '/welcome';
 
-function HelloWorld() {
-    return (
-        <div>Hello, World!</div>
-    );
+if (!userIsLoggedIn) {
+	elem = <Welcome />;
+} else {
+	elem = <img src="/assets/reactlogo.svg" />;
 }
+
+ReactDOM.render(elem, document.querySelector('main'));
