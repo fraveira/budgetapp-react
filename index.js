@@ -3,31 +3,49 @@ const app = express();
 const compression = require('compression');
 const db = require('./db');
 const cookieSession = require('cookie-session');
-const csurf = require('csurf');
 const bcrypt = require('./bcrypt');
+const csurf = require('csurf');
+const multer = require('multer');
+const uidSafe = require('uid-safe');
+const path = require('path');
+const server = require('http').Server(app);
 
 app.use(compression());
 
-/// Static:
+// Static:
 
 app.use(express.static('./public'));
 
 app.use(express.json());
 
+// Upload storage logic:
+
+const diskStorage = multer.diskStorage({
+	destination: function(req, file, callback) {
+		callback(null, __dirname + '/uploads');
+	},
+	filename: function(req, file, callback) {
+		uidSafe(24).then(function(uid) {
+			callback(null, uid + path.extname(file.originalname));
+		});
+	}
+});
+
+const uploader = multer({
+	storage: diskStorage,
+	limits: {
+		fileSize: 3097152
+	}
+});
+
 // Middleware
 
-app.use(
-	cookieSession({
-		secret: 'Cogito ergo sum',
-		maxAge: 1000 * 60 * 60 * 24 * 14
-	})
-);
+const cookieSessionMiddleware = cookieSession({
+	secret: `Cogito ergo sum.`,
+	maxAge: 1000 * 60 * 60 * 24 * 90
+});
 
-app.use(
-	express.urlencoded({
-		extended: false
-	})
-);
+app.use(cookieSessionMiddleware);
 
 app.use(csurf());
 
@@ -36,6 +54,14 @@ app.use(function(req, res, next) {
 	next();
 });
 
+app.use(
+	express.urlencoded({
+		extended: false
+	})
+);
+
+// End of the middleware.
+//A LA PREVIA!
 // End of the middleware.
 
 if (process.env.NODE_ENV != 'production') {
@@ -97,8 +123,8 @@ app.post('/login', (req, res) => {
 		.then((areTheSame) => {
 			if (areTheSame) {
 				db.loggedIdCheck(email).then((id) => {
-					console.log('User id is', req.session.userId);
 					req.session.userId = id.rows[0].id;
+					console.log('User id is', req.session.userId);
 					res.json({ success: true });
 				});
 			} else {
