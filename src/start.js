@@ -9,7 +9,7 @@ const userIsLoggedIn = location.pathname != '/welcome';
 if (!userIsLoggedIn) {
 	elem = <Welcome />;
 } else {
-	elem = <img src="/assets/reactlogo.svg" />;
+	elem = <App />;
 }
 
 ReactDOM.render(elem, document.querySelector('main'));

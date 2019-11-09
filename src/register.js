@@ -45,6 +45,7 @@ export default class Register extends React.Component {
 				/>
 				<input name="first" placeholder="First Name" id="first" onChange={(e) => this.handleChange(e)} />
 				<input name="last" placeholder="Last Name" id="last" onChange={(e) => this.handleChange(e)} />
+				<input type="hidden" name="_csrf" value="{{csrfToken}}" />
 				<input
 					type="email"
 					name="email"

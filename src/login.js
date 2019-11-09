@@ -2,13 +2,6 @@ import React from 'react';
 import axios from './axios';
 import { Link } from 'react-router-dom';
 
-const welcomeForm = {
-	display: 'block',
-	margin: 'auto',
-	marginTop: '10px',
-	marginBottom: '5px'
-};
-
 export default class Login extends React.Component {
 	constructor(props) {
 		super(props);
@@ -27,7 +20,6 @@ export default class Login extends React.Component {
 				password: this.state.password
 			})
 			.then(({ data }) => {
-				console.log('Info importante', data);
 				if (data.success) {
 					console.log('Login succesful');
 					location.replace('/');
@@ -50,26 +42,20 @@ export default class Login extends React.Component {
 			<div>
 				{this.state.error && <div className="error"> Oops! That was your fault</div>}
 				<input
-					className="form-control"
-					type="email"
-					style={welcomeForm}
 					name="email"
+					type="email"
 					placeholder="E-mail"
 					id="email"
 					onChange={(e) => this.handleChange(e)}
 				/>
 				<input
-					className="form-control"
-					style={welcomeForm}
 					name="password"
+					type="password"
 					placeholder="Password"
 					id="password"
-					type="password"
 					onChange={(e) => this.handleChange(e)}
 				/>
-				<button className="submitbtn" onClick={() => this.submit()}>
-					Submit
-				</button>
+				<button onClick={() => this.submit()}>Submit</button>
 				<Link to="/">or Register</Link>
 			</div>
 		);

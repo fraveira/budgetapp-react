@@ -3,8 +3,8 @@ const app = express();
 const compression = require('compression');
 const db = require('./db');
 const cookieSession = require('cookie-session');
-const bcrypt = require('./bcrypt');
 const csurf = require('csurf');
+const bcrypt = require('./bcrypt');
 
 app.use(compression());
 
@@ -18,8 +18,14 @@ app.use(express.json());
 
 app.use(
 	cookieSession({
-		secret: `Ego cogito ergo sum.`,
+		secret: 'Cogito ergo sum',
 		maxAge: 1000 * 60 * 60 * 24 * 14
+	})
+);
+
+app.use(
+	express.urlencoded({
+		extended: false
 	})
 );
 
@@ -30,16 +36,9 @@ app.use(function(req, res, next) {
 	next();
 });
 
-app.use(
-	express.urlencoded({
-		extended: false
-	})
-);
-
 // End of the middleware.
 
 if (process.env.NODE_ENV != 'production') {
-	// Make this ready to deploy.
 	app.use(
 		'/bundle.js',
 		require('http-proxy-middleware')({
@@ -70,12 +69,46 @@ app.post('/register', (req, res) => {
 			.registerUser(username, first, last, email, hash)
 			.then(({ rows }) => {
 				req.session.userId = rows[0].id;
+				console.log('User id is', req.session.userId);
 				res.json({ success: true });
 			})
 			.catch((err) => {
 				console.log('error happened, maybe user typed an existing-email.', err);
 			});
 	});
+});
+
+// Login.
+
+app.post('/login', (req, res) => {
+	let email = req.body.email;
+	let submittedPass = req.body.password;
+	let userPassword;
+
+	db
+		.retrievePassword(email)
+		.then(({ rows }) => {
+			userPassword = rows[0].password;
+			return userPassword;
+		})
+		.then((userPassword) => {
+			return bcrypt.compare(submittedPass, userPassword);
+		})
+		.then((areTheSame) => {
+			if (areTheSame) {
+				db.loggedIdCheck(email).then((id) => {
+					console.log('User id is', req.session.userId);
+					req.session.userId = id.rows[0].id;
+					res.json({ success: true });
+				});
+			} else {
+				res.json({ success: false });
+			}
+		})
+		.catch((error) => {
+			console.log('This is catching an error happening in comparing passwords', error);
+			res.json({ success: false });
+		});
 });
 
 // leave as it is.

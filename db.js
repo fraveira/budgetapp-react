@@ -9,10 +9,10 @@ module.exports.registerUser = (username, first, last, email, hash) => {
 	);
 };
 
-module.exports.retrievingPassword = (email) => {
+module.exports.retrievePassword = (email) => {
 	return db.query(`SELECT password FROM users WHERE email = $1`, [ email ]);
 };
 
-module.exports.loggedId = (email) => {
+module.exports.loggedIdCheck = (email) => {
 	return db.query(`SELECT id FROM users WHERE email = $1`, [ email ]);
 };
