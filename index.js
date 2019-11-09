@@ -11,6 +11,8 @@ app.use(express.static('./public'));
 
 app.use(express.json());
 
+// Middleware, testing new commit.
+
 if (process.env.NODE_ENV != 'production') {
 	// Make this ready to deploy.
 	app.use(
