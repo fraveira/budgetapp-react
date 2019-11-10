@@ -135,6 +135,19 @@ app.post('/login', (req, res) => {
 		});
 });
 
+// User.
+
+app.get('/user', async (req, res) => {
+	try {
+		const { rows } = await db.getUserById(req.session.userId);
+		res.json(rows[0]);
+		console.log('Rows are these', rows[0]);
+	} catch (err) {
+		console.log(err);
+		res.sendStatus(500);
+	}
+});
+
 // leave as it is.
 app.get('*', function(req, res) {
 	if (!req.session.userId) {

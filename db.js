@@ -16,3 +16,7 @@ module.exports.retrievePassword = (email) => {
 module.exports.loggedIdCheck = (email) => {
 	return db.query(`SELECT id FROM users WHERE email = $1`, [ email ]);
 };
+
+module.exports.getUserById = (id) => {
+	return db.query(`SELECT id, username, first, last FROM users WHERE id = $1`, [ id ]);
+};
