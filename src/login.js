@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from './axios';
 import { Link } from 'react-router-dom';
+import { Button, Form, Col, Row, Container } from 'react-bootstrap';
 
 export default class Login extends React.Component {
 	constructor(props) {
@@ -39,25 +40,42 @@ export default class Login extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<React.Fragment>
 				{this.state.error && <div className="error"> Oops! That was your fault</div>}
-				<input
-					name="email"
-					type="email"
-					placeholder="E-mail"
-					id="email"
-					onChange={(e) => this.handleChange(e)}
-				/>
-				<input
-					name="password"
-					type="password"
-					placeholder="Password"
-					id="password"
-					onChange={(e) => this.handleChange(e)}
-				/>
-				<button onClick={() => this.submit()}>Submit</button>
-				<Link to="/">or Register</Link>
-			</div>
+				<Container>
+					<Row>
+						<Col />
+						<Col xs={6}>
+							<Form.Group controlId="formBasicEmail">
+								<Form.Label>Email address</Form.Label>
+								<Form.Control
+									name="email"
+									type="email"
+									placeholder="E-mail"
+									id="email"
+									onChange={(e) => this.handleChange(e)}
+								/>
+							</Form.Group>
+
+							<Form.Group controlId="formBasicPassword">
+								<Form.Label>Password</Form.Label>
+								<Form.Control
+									name="password"
+									type="password"
+									placeholder="Password"
+									id="password"
+									onChange={(e) => this.handleChange(e)}
+								/>
+							</Form.Group>
+							<Button variant="success" type="submit" size="lg" onClick={() => this.submit()}>
+								Log in
+							</Button>
+							<Link to="/"> or Register</Link>
+						</Col>
+						<Col />
+					</Row>
+				</Container>
+			</React.Fragment>
 		);
 	}
 }

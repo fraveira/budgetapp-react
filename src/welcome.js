@@ -2,7 +2,7 @@ import React from 'react';
 import { HashRouter, Route } from 'react-router-dom';
 import Register from './register';
 import Login from './login';
-import { Navbar, Nav, Form, FormControl, Button, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, Button, NavDropdown, Col, Row, Container } from 'react-bootstrap';
 
 export default function Welcome() {
 	return (
@@ -28,9 +28,16 @@ export default function Welcome() {
 					</Form>
 				</Navbar.Collapse>
 			</Navbar>
-
-			<img src="/assets/reactlogo" />
-			<h2>Welcome to your Budgeting app!</h2>
+			<Container>
+				<Row>
+					<Col />
+					<Col xs={6}>
+						<img src="/assets/reactlogo" />
+						<h2 className="regh2">Create my Account</h2>
+					</Col>
+					<Col />
+				</Row>
+			</Container>
 			<HashRouter>
 				<div>
 					<Route exact path="/" component={Register} />
