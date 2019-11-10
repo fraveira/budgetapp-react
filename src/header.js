@@ -4,7 +4,7 @@ import { Navbar, Nav, Form, FormControl, Button, NavDropdown } from 'react-boots
 export default function Header({ first }) {
 	return (
 		<React.Fragment>
-			<Navbar bg="dark" variant="dark" expand="lg">
+			<Navbar sticky="top" bg="dark" variant="dark" expand="lg">
 				<Navbar.Brand href="#home">Budgematic</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">

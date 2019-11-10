@@ -46,7 +46,7 @@ export class App extends React.Component {
 							path="/app/create"
 							render={(props) => (
 								<section>
-									<Creator first={this.state.first} />
+									<Creator first={this.state.first} last={this.state.last} />
 								</section>
 							)}
 						/>
