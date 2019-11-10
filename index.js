@@ -148,6 +148,13 @@ app.get('/user', async (req, res) => {
 	}
 });
 
+// Logout route:
+
+app.get('/logout', function(req, res) {
+	req.session = null;
+	res.redirect('/register');
+});
+
 // leave as it is.
 app.get('*', function(req, res) {
 	if (!req.session.userId) {

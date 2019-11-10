@@ -2,6 +2,9 @@ import React from 'react';
 import axios from './axios';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Header from './header';
+import Overview from './overview';
+import Creator from './creator';
+import { Button, Container, Row, Col } from 'react-bootstrap';
 
 export class App extends React.Component {
 	constructor() {
@@ -27,34 +30,26 @@ export class App extends React.Component {
 				<BrowserRouter>
 					<React.Fragment>
 						<Header first={this.state.first} />
-						<p>Hi there, {this.state.first}</p>
 
-						{/* <Route
+						<Route
 							exact
-							path="/"
+							path="/app/overview"
 							render={(props) => (
 								<section>
-									<Profile
-										id={this.state.id}
-										first={this.state.first}
-										last={this.state.last}
-										profilepicture={this.state.profilepicture}
-										onClick={this.showUploader}
-										bio={this.state.bio}
-										setBio={this.setBio}
-										toggleModal={() => this.toggleModal()}
-									/>
-									{this.state.uploaderIsVisible && <Uploader setImage={this.setImage} />}
+									<Overview first={this.state.first} />
 								</section>
 							)}
-						/> */}
+						/>
 
-						{/* <Route
-							path="/user/:id"
+						<Route
+							exact
+							path="/app/create"
 							render={(props) => (
-								<OtherProfile key={props.match.url} match={props.match} history={props.history} />
+								<section>
+									<Creator first={this.state.first} />
+								</section>
 							)}
-						/> */}
+						/>
 					</React.Fragment>
 				</BrowserRouter>
 			</React.Fragment>

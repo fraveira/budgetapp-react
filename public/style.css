@@ -3,3 +3,11 @@
 	margin-top: 25px;
 	margin-bottom: 25px;
 }
+
+.creatorBtn {
+	margin-top: 30px;
+}
+
+.noUnderline:hover {
+	text-decoration: none;
+}
