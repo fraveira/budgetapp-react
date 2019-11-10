@@ -61,8 +61,6 @@ app.use(
 );
 
 // End of the middleware.
-//A LA PREVIA!
-// End of the middleware.
 
 if (process.env.NODE_ENV != 'production') {
 	app.use(
@@ -95,7 +93,7 @@ app.post('/register', (req, res) => {
 			.registerUser(username, first, last, email, hash)
 			.then(({ rows }) => {
 				req.session.userId = rows[0].id;
-				console.log('User id is', req.session.userId);
+				console.log('REGISTERED: User id is', req.session.userId);
 				res.json({ success: true });
 			})
 			.catch((err) => {
@@ -124,7 +122,7 @@ app.post('/login', (req, res) => {
 			if (areTheSame) {
 				db.loggedIdCheck(email).then((id) => {
 					req.session.userId = id.rows[0].id;
-					console.log('User id is', req.session.userId);
+					console.log('LOGGED IN: User id is', req.session.userId);
 					res.json({ success: true });
 				});
 			} else {
