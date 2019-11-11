@@ -11,3 +11,11 @@
 .noUnderline:hover {
 	text-decoration: none;
 }
+
+.stickyCounter {
+	padding-top: 70px;
+}
+
+.counterJumbo {
+	padding: 8rem 5rem;
+}

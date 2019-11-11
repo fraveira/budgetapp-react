@@ -5,7 +5,7 @@ export default function Header({ first }) {
 	return (
 		<React.Fragment>
 			<Navbar sticky="top" bg="dark" variant="dark" expand="lg">
-				<Navbar.Brand href="#home">Budgematic</Navbar.Brand>
+				<Navbar.Brand href="/app/overview">Budgematic</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="mr-auto">
