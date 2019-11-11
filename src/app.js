@@ -11,7 +11,8 @@ export class App extends React.Component {
 		super();
 		this.state = {
 			first: '',
-			last: ''
+			last: '',
+			id: ''
 		};
 	}
 
@@ -46,7 +47,7 @@ export class App extends React.Component {
 							path="/app/create"
 							render={(props) => (
 								<section>
-									<Creator first={this.state.first} last={this.state.last} />
+									<Creator first={this.state.first} last={this.state.last} id={this.state.id} />
 								</section>
 							)}
 						/>

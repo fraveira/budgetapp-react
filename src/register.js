@@ -25,7 +25,7 @@ export default class Register extends React.Component {
 			})
 			.then(({ data }) => {
 				if (data.success) {
-					location.replace('/');
+					location.replace('/app/overview');
 				} else {
 					this.setState({
 						error: true

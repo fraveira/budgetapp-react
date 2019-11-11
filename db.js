@@ -20,3 +20,7 @@ module.exports.loggedIdCheck = (email) => {
 module.exports.getUserById = (id) => {
 	return db.query(`SELECT id, username, first, last FROM users WHERE id = $1`, [ id ]);
 };
+
+module.exports.postingBudgetOnly = (id) => {
+	return db.query(`INSERT INTO budgets (owner) values ($1) RETURNING id;`, [ id ]);
+};

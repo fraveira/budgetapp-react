@@ -3,25 +3,27 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Counter from './counter';
 import { Button, Navbar } from 'react-bootstrap';
 
-export default function Creator({ first, last }) {
+export default function Creator({ first, last, id }) {
 	const [ income, setIncome ] = useState({});
-	const [ outgo1, setOutgo1 ] = useState(0);
-	const [ outgo2, setOutgo2 ] = useState(0);
-	const [ outgo3, setOutgo3 ] = useState(0);
-	const [ outgo4, setOutgo4 ] = useState(0);
-	const [ outgo5, setOutgo5 ] = useState(0);
-	const [ outgo6, setOutgo6 ] = useState(0);
-	const [ outgo7, setOutgo7 ] = useState(0);
-	const [ outgo8, setOutgo8 ] = useState(0);
-	console.log('Total outgo is', outgo1 + outgo2 + outgo3 + outgo4 + outgo5 + outgo6 + outgo7 + outgo8);
-	useEffect(() => {
-		console.log('Got here');
-	}, []);
+	const [ expenses, setExpenses ] = useState({});
+	const [ sumIncome, setSumIncome ] = useState(0);
+	const [ sumExpenses, setSumExpenses ] = useState(0);
+
+	useEffect(
+		() => {
+			console.log('The sum', Object.values(income));
+			let sumOfIncomes = Object.values(income).reduce((a, b) => a + b, 0);
+			setSumIncome(sumOfIncomes);
+			let sumOfExpenses = Object.values(expenses).reduce((a, b) => a + b, 0);
+			setSumExpenses(sumOfExpenses);
+		},
+		[ income, expenses ]
+	);
 
 	console.log('This is the income', income);
-
+	console.log('These are the expenses', expenses);
 	const keyCheckIncome = (e) => {
-		if (e.key === 'Enter') {
+		if (e.key === 'Enter' || e.key === 'Tab') {
 			console.log('This is e.target.name', e.target.name);
 			setIncome({
 				...income,
@@ -30,51 +32,13 @@ export default function Creator({ first, last }) {
 		}
 	};
 
-	const keyCheck3 = (e) => {
-		if (e.key === 'Enter') {
-			setOutgo1(Number(e.target.value));
-		}
-	};
-
-	const keyCheck4 = (e) => {
-		if (e.key === 'Enter') {
-			setOutgo2(Number(e.target.value));
-		}
-	};
-
-	const keyCheck5 = (e) => {
-		if (e.key === 'Enter') {
-			setOutgo3(Number(e.target.value));
-		}
-	};
-
-	const keyCheck6 = (e) => {
-		if (e.key === 'Enter') {
-			setOutgo4(Number(e.target.value));
-		}
-	};
-
-	const keyCheck7 = (e) => {
-		if (e.key === 'Enter') {
-			setOutgo5(Number(e.target.value));
-		}
-	};
-
-	const keyCheck8 = (e) => {
-		if (e.key === 'Enter') {
-			setOutgo6(Number(e.target.value));
-		}
-	};
-
-	const keyCheck9 = (e) => {
-		if (e.key === 'Enter') {
-			setOutgo7(Number(e.target.value));
-		}
-	};
-
-	const keyCheck10 = (e) => {
-		if (e.key === 'Enter') {
-			setOutgo8(Number(e.target.value));
+	const keyCheckExpenses = (e) => {
+		if (e.key === 'Enter' || e.key === 'Tab') {
+			console.log('This is e.target.name', e.target.name);
+			setExpenses({
+				...expenses,
+				[e.target.name]: Number(e.target.value)
+			});
 		}
 	};
 
@@ -91,7 +55,7 @@ export default function Creator({ first, last }) {
 							placeholder="Insert Income"
 							type="number"
 							name="income1"
-							defaultValue="0"
+							defaultValue=""
 							onKeyDown={keyCheckIncome}
 						/>
 						<p>{income.income1}</p>
@@ -101,33 +65,44 @@ export default function Creator({ first, last }) {
 							placeholder="Insert Income"
 							type="number"
 							name="income2"
-							defaultValue="0"
+							defaultValue=""
 							onKeyDown={keyCheckIncome}
 						/>
 						<p>{income.income2}</p>
 						<h3>EXPENSES for the month:</h3>
 						<h3>Housing</h3>
-						€ <input placeholder="Insert Income" type="number" name="housing" onKeyDown={keyCheck3} />
+						€ <input placeholder="Insert Income" type="number" name="outgo1" onKeyDown={keyCheckExpenses} />
+						<p>{expenses.outgo1}</p>
 						<h3>Food</h3>
-						€ <input placeholder="Insert Income" type="number" onKeyDown={keyCheck4} />
+						€ <input placeholder="Insert Income" type="number" name="outgo2" onKeyDown={keyCheckExpenses} />
+						<p>{expenses.outgo2}</p>
 						<h3>Transportation</h3>
-						€ <input placeholder="Insert Income" type="number" onKeyDown={keyCheck5} />
+						€ <input placeholder="Insert Income" type="number" name="outgo3" onKeyDown={keyCheckExpenses} />
+						<p>{expenses.outgo3}</p>
 						<h3>Clothes</h3>
-						€ <input placeholder="Insert Income" type="number" onKeyDown={keyCheck6} />
+						€ <input placeholder="Insert Income" type="number" name="outgo4" onKeyDown={keyCheckExpenses} />
+						<p>{expenses.outgo4}</p>
 						<h3>Insurance</h3>
-						€ <input placeholder="Insert Income" type="number" onKeyDown={keyCheck7} />
+						€ <input placeholder="Insert Income" type="number" name="outgo5" onKeyDown={keyCheckExpenses} />
+						<p>{expenses.outgo5}</p>
 						<h3>Utilities</h3>
-						€ <input placeholder="Insert Income" type="number" onKeyDown={keyCheck8} />
+						€ <input placeholder="Insert Income" type="number" name="outgo6" onKeyDown={keyCheckExpenses} />
+						<p>{expenses.outgo6}</p>
 						<h3>Travel</h3>
-						€ <input placeholder="Insert Income" type="number" onKeyDown={keyCheck9} />
+						€ <input placeholder="Insert Income" type="number" name="outgo7" onKeyDown={keyCheckExpenses} />
+						<p>{expenses.outgo7}</p>
 						<h3>Health and Beauty</h3>
-						€ <input placeholder="Insert Income" type="number" onKeyDown={keyCheck10} />
+						€ <input placeholder="Insert Income" type="number" name="outgo8" onKeyDown={keyCheckExpenses} />
+						<p>{expenses.outgo8}</p>
 					</Col>
 					<Col md={5}>
 						<Navbar sticky="top" className="stickyCounter">
 							<Counter
-								totalIncome={income.income1 + income.income2}
-								totalOutgo={outgo1 + outgo2 + outgo3 + outgo4 + outgo5 + outgo6 + outgo7 + outgo8}
+								totalIncome={sumIncome}
+								totalOutgo={sumExpenses}
+								theIncome={income}
+								theOutgo={expenses}
+								userId={id}
 							/>
 						</Navbar>
 					</Col>

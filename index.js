@@ -148,6 +148,51 @@ app.get('/user', async (req, res) => {
 	}
 });
 
+// Submitting budget route:
+
+app.post('/api/newbudget/:userId', (req, res) => {
+	let userId = Number(req.params.userId);
+
+	console.log('This is in post new budget thingy', req.body.theIncome);
+	console.log("This is the userId that's posting", userId);
+
+	db
+		.postingBudgetOnly(userId)
+		.then(function({ rows }) {
+			res.json(rows[0]);
+			console.log('Rows after posting new budget', rows[0]);
+		})
+		.catch(function(err) {
+			console.log(err);
+			res.sendStatus(500);
+		});
+
+	// db
+	// 	.retrievePassword(email)
+	// 	.then(({ rows }) => {
+	// 		userPassword = rows[0].password;
+	// 		return userPassword;
+	// 	})
+	// 	.then((userPassword) => {
+	// 		return bcrypt.compare(submittedPass, userPassword);
+	// 	})
+	// 	.then((areTheSame) => {
+	// 		if (areTheSame) {
+	// 			db.loggedIdCheck(email).then((id) => {
+	// 				req.session.userId = id.rows[0].id;
+	// 				console.log('LOGGED IN: User id is', req.session.userId);
+	// 				res.json({ success: true });
+	// 			});
+	// 		} else {
+	// 			res.json({ success: false });
+	// 		}
+	// 	})
+	// 	.catch((error) => {
+	// 		console.log('This is catching an error happening in comparing passwords', error);
+	// 		res.json({ success: false });
+	// 	});
+});
+
 // Logout route:
 
 app.get('/logout', function(req, res) {
