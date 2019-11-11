@@ -164,12 +164,20 @@ app.post('/api/newbudget/:userId', (req, res) => {
 			return budgetId;
 		})
 		.then((budgetId) => {
-			console.log('Qué es budgetValue?', budgetId);
 			console.log('New COSA AQUÍ', req.body.theIncome);
 			let theIncome = req.body.theIncome;
 			for (const property in theIncome) {
 				console.log('The loop!', budgetId, `${property}`, `${theIncome[property]}`);
 				db.postingIncomeOnly(budgetId, `${property}`, `${theIncome[property]}`);
+			}
+			return budgetId;
+		})
+		.then((budgetId) => {
+			console.log('New COSA AQUÍ', req.body.theOutgo);
+			let theOutgo = req.body.theOutgo;
+			for (const property in theOutgo) {
+				console.log('The loop!', budgetId, `${property}`, `${theOutgo[property]}`);
+				db.postingExpensesOnly(budgetId, `${property}`, `${theOutgo[property]}`);
 			}
 		})
 		.catch(function(err) {
