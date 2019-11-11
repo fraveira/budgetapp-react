@@ -6,7 +6,7 @@ const Counter = (props) => {
 	{
 		return (
 			<React.Fragment>
-				<p>Here {props.income}</p>
+				<p>Here {props.totalIncome}</p>
 			</React.Fragment>
 		);
 	}
