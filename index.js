@@ -159,8 +159,18 @@ app.post('/api/newbudget/:userId', (req, res) => {
 	db
 		.postingBudgetOnly(userId)
 		.then(function({ rows }) {
-			res.json(rows[0]);
 			console.log('Rows after posting new budget', rows[0].id);
+			let budgetId = rows[0].id;
+			return budgetId;
+		})
+		.then((budgetId) => {
+			console.log('Qué es budgetValue?', budgetId);
+			console.log('New COSA AQUÍ', req.body.theIncome);
+			let theIncome = req.body.theIncome;
+			for (const property in theIncome) {
+				console.log('The loop!', budgetId, `${property}`, `${theIncome[property]}`);
+				db.postingIncomeOnly(budgetId, `${property}`, `${theIncome[property]}`);
+			}
 		})
 		.catch(function(err) {
 			console.log(err);

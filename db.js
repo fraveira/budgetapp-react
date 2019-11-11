@@ -24,3 +24,14 @@ module.exports.getUserById = (id) => {
 module.exports.postingBudgetOnly = (id) => {
 	return db.query(`INSERT INTO budgets (owner) values ($1) RETURNING id;`, [ id ]);
 };
+
+module.exports.postingIncomeOnly = (id, cat, value) => {
+	console.log('This is the cat', cat);
+	if (cat == 'income1') {
+		return db.query(`INSERT INTO incomes (inbudget, income1) values ($1, $2) RETURNING id;`, [ id, value ]);
+	} else if (cat == 'income2') {
+		return db.query(`INSERT INTO incomes (inbudget, income2) values ($1, $2) RETURNING id;`, [ id, value ]);
+	} else if (cat == 'income3') {
+		return db.query(`INSERT INTO incomes (inbudget, income3) values ($1, $2) RETURNING id;`, [ id, value ]);
+	}
+};
