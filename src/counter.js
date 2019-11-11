@@ -11,10 +11,17 @@ const Counter = ({ totalIncome, totalOutgo, theIncome, theOutgo, userId }) => {
 
 	const submitBudget = () => {
 		(async () => {
-			const { data } = await axios.post(`/api/newbudget/${userId}`, {
-				theIncome,
-				theOutgo
-			});
+			const { data } = await axios
+				.post(`/api/newbudget/${userId}`, {
+					theIncome,
+					theOutgo
+				})
+				.then(({ data }) => {
+					console.log('Data success?', data.success);
+					if (data.success) {
+						location.replace('/app/overview');
+					}
+				});
 		})();
 	};
 

@@ -179,6 +179,7 @@ app.post('/api/newbudget/:userId', (req, res) => {
 				console.log('The loop!', budgetId, `${property}`, `${theOutgo[property]}`);
 				db.postingExpensesOnly(budgetId, `${property}`, `${theOutgo[property]}`);
 			}
+			res.json({ success: true });
 		})
 		.catch(function(err) {
 			console.log(err);
