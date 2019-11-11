@@ -93,7 +93,6 @@ app.post('/register', (req, res) => {
 			.registerUser(username, first, last, email, hash)
 			.then(({ rows }) => {
 				req.session.userId = rows[0].id;
-				console.log('REGISTERED: User id is', req.session.userId);
 				res.json({ success: true });
 			})
 			.catch((err) => {
@@ -154,28 +153,20 @@ app.post('/api/newbudget/:userId', (req, res) => {
 	let userId = Number(req.params.userId);
 
 	console.log('This is in post new budget thingy', req.body.theIncome);
+	console.log('This is in post new budget thingy', req.body.theOutgo);
 	console.log("This is the userId that's posting", userId);
 
 	db
 		.postingBudgetOnly(userId)
 		.then(function({ rows }) {
 			res.json(rows[0]);
-			console.log('Rows after posting new budget', rows[0]);
+			console.log('Rows after posting new budget', rows[0].id);
 		})
 		.catch(function(err) {
 			console.log(err);
 			res.sendStatus(500);
 		});
 
-	// db
-	// 	.retrievePassword(email)
-	// 	.then(({ rows }) => {
-	// 		userPassword = rows[0].password;
-	// 		return userPassword;
-	// 	})
-	// 	.then((userPassword) => {
-	// 		return bcrypt.compare(submittedPass, userPassword);
-	// 	})
 	// 	.then((areTheSame) => {
 	// 		if (areTheSame) {
 	// 			db.loggedIdCheck(email).then((id) => {
