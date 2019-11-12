@@ -26,7 +26,6 @@ module.exports.postingBudgetOnly = (id) => {
 };
 
 module.exports.postingIncomeOnly = (cat, value, signs) => {
-	// console.log('Signs and value', signs, value);
 	return db.query(
 		`
     INSERT INTO incomes (inbudget, ${cat + ''}) 
@@ -36,8 +35,14 @@ module.exports.postingIncomeOnly = (cat, value, signs) => {
 	);
 };
 
-module.exports.postingExpensesOnly = (id, cat, value) => {
-	return db.query(`INSERT INTO outgos (inbudget, ${cat + ''}) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
+module.exports.postingExpensesOnly = (cat, value, signs2) => {
+	return db.query(
+		`
+    INSERT INTO outgos (inbudget, ${cat + ''}) 
+    values (${signs2 + ''})
+    RETURNING inbudget;`,
+		value
+	);
 };
 
 module.exports.getRecentBudgets = (id) => {

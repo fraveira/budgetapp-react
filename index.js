@@ -159,7 +159,6 @@ app.post('/api/newbudget/:userId', (req, res) => {
 	db
 		.postingBudgetOnly(userId)
 		.then(function({ rows }) {
-			console.log('Rows after posting new budget', rows[0].id);
 			let budgetId = rows[0].id;
 			return budgetId;
 		})
@@ -179,28 +178,40 @@ app.post('/api/newbudget/:userId', (req, res) => {
 			valsIncome.forEach((e, i) => {
 				signs.push(`$${i + 1}`);
 			});
-			console.log('These are the signs', signs);
-			console.log('What is cols now?', colsIncome);
-			console.log('What is vals now?', valsIncome);
 
 			db.postingIncomeOnly(colsIncome, valsIncome, signs).then((data) => {
-				console.log('RESULT FROM FB IS', data);
+				console.log('RESULT FROM posting income IS', data);
 			});
 
-			// return budgetId;
+			return budgetId;
+		})
+		.then((budgetId) => {
+			let theOutgo = req.body.theOutgo;
+			const colsExpenses = [];
+			const valsExpenses = [];
+
+			for (var prop in theOutgo) {
+				colsExpenses.push(prop);
+				valsExpenses.push(theOutgo[prop]);
+			}
+
+			valsExpenses.unshift(budgetId);
+
+			let signs2 = [];
+
+			valsExpenses.forEach((e, i) => {
+				signs2.push(`$${i + 1}`);
+			});
+
+			db.postingExpensesOnly(colsExpenses, valsExpenses, signs2).then((data) => {
+				console.log('RESULT FROM posting outgos IS', data);
+				res.json({ success: true });
+			});
 		})
 		.catch(function(err) {
 			console.log(err);
 			res.sendStatus(500);
 		});
-	// .then((budgetId) => {
-	// 	let theOutgo = req.body.theOutgo;
-	// 	const colsExpenses = [];
-	// 	const valsExpenses = [];
-	// 	for (var prop in theOutgo) {
-	// 		colsExpenses.push(prop);
-	// 		valsExpenses.push(theOutgo[prop]);
-	// 	}
 	// 	console.log('What is cols now?', colsExpenses);
 	// 	console.log('What is cols now?', valsExpenses);
 
