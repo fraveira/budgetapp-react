@@ -46,16 +46,24 @@ module.exports.postingExpensesOnly = (cat, value, signs2) => {
 };
 
 module.exports.getRecentBudgets = (id) => {
-	return db.query(`SELECT id, created_at FROM budgets WHERE owner = $1 ORDER BY id DESC LIMIT 3 `, [ id ]);
-};
-
-module.exports.gettingIncomeOnly = (budgetId) => {
-	return db.query(`SELECT income1, income2, income3 FROM incomes WHERE inbudget = $1`, [ budgetId ]);
-};
-
-module.exports.gettingExpensesOnly = (budgetId) => {
 	return db.query(
-		`SELECT outgo1, outgo2, outgo3, outgo4, outgo5, outgo6, outgo7, outgo8 FROM outgos WHERE inbudget = $1`,
-		[ budgetId ]
+		`SELECT budgets.id, incomes.income1, incomes.income2, incomes.income3, outgos.outgo1, outgos.outgo2, outgos.outgo3, outgos.outgo4, outgos.outgo5, outgos.outgo6, outgos.outgo7, outgos.outgo8
+    FROM budgets 
+    INNER JOIN incomes
+    ON ( incomes.inbudget = budgets.id) 
+    INNER JOIN outgos
+    ON (outgos.inbudget = budgets.id)
+    WHERE budgets.owner = $1
+    ORDER BY id 
+    DESC LIMIT 3 `,
+		[ id ]
 	);
 };
+
+// module.exports.gettingIncomeOnly = (budgetId) => {
+// 	return db.query(`SELECT * FROM incomes WHERE inbudget = $1`, [ budgetId ]);
+// };
+
+// module.exports.gettingExpensesOnly = (budgetId) => {
+// 	return db.query(`SELECT * FROM outgos WHERE inbudget = $1`, [ budgetId ]);
+// };

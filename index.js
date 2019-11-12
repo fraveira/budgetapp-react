@@ -212,12 +212,6 @@ app.post('/api/newbudget/:userId', (req, res) => {
 			console.log(err);
 			res.sendStatus(500);
 		});
-	// 	console.log('What is cols now?', colsExpenses);
-	// 	console.log('What is cols now?', valsExpenses);
-
-	// 	// 	db.postingExpensesOnly(budgetId, `${property}`, `${theOutgo[property]}`);
-	// 	// res.json({ success: true });
-	// })
 });
 
 // Getting budgets info for overview:
@@ -227,24 +221,8 @@ app.get('/api/budgets/:userId', async (req, res) => {
 	db
 		.getRecentBudgets(userId)
 		.then(function({ rows }) {
-			console.log('Are we getting here at all? Yes', rows[0].id);
-			let budgetId = rows[0].id;
-			return budgetId;
-		})
-		.then((budgetId) => {
-			db.gettingIncomeOnly(budgetId).then(function({ rows }) {
-				console.log('These are new rows for Incomes', rows[0]);
-				res.json(rows);
-			});
-			return budgetId;
-		})
-		.then((budgetId) => {
-			console.log('Are we getting the budget id here? YES', budgetId);
-			db.gettingExpensesOnly(budgetId).then(function({ rows }) {
-				console.log('These are new rows for Expenses', rows[0]);
-				res.json(rows);
-				return budgetId;
-			});
+			console.log('Budget ID and other stuff', rows);
+			res.json(rows);
 		})
 		.catch(function(err) {
 			console.log(err);
