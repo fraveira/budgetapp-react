@@ -25,12 +25,19 @@ module.exports.postingBudgetOnly = (id) => {
 	return db.query(`INSERT INTO budgets (owner) values ($1) RETURNING id;`, [ id ]);
 };
 
-module.exports.postingIncomeOnly = (id, cat, value) => {
-	return db.query(`INSERT INTO incomes (inbudget, ${cat}) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
+module.exports.postingIncomeOnly = (cat, value, signs) => {
+	// console.log('Signs and value', signs, value);
+	return db.query(
+		`
+    INSERT INTO incomes (inbudget, ${cat + ''}) 
+    values (${signs + ''})
+    RETURNING inbudget;`,
+		value
+	);
 };
 
 module.exports.postingExpensesOnly = (id, cat, value) => {
-	return db.query(`INSERT INTO outgos (inbudget, ${cat}) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
+	return db.query(`INSERT INTO outgos (inbudget, ${cat + ''}) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
 };
 
 module.exports.getRecentBudgets = (id) => {

@@ -164,29 +164,49 @@ app.post('/api/newbudget/:userId', (req, res) => {
 			return budgetId;
 		})
 		.then((budgetId) => {
-			console.log('New COSA AQUÍ', req.body.theIncome);
-			// const cols = ['outgo1', 'outgo2']
-			// const vals = [100, 200]
-
-			// const query = `INSERT INTO TABLE (${})`
 			let theIncome = req.body.theIncome;
-			for (const property in theIncome) {
-				db.postingIncomeOnly(budgetId, `${property}`, `${theIncome[property]}`);
+			const colsIncome = [];
+			const valsIncome = [];
+			for (var prop in theIncome) {
+				colsIncome.push(prop);
+				valsIncome.push(theIncome[prop]);
 			}
-			return budgetId;
-		})
-		.then((budgetId) => {
-			console.log('New COSA AQUÍ', req.body.theOutgo);
-			let theOutgo = req.body.theOutgo;
-			for (const property in theOutgo) {
-				db.postingExpensesOnly(budgetId, `${property}`, `${theOutgo[property]}`);
-			}
-			res.json({ success: true });
+
+			valsIncome.unshift(budgetId);
+
+			let signs = [];
+
+			valsIncome.forEach((e, i) => {
+				signs.push(`$${i + 1}`);
+			});
+			console.log('These are the signs', signs);
+			console.log('What is cols now?', colsIncome);
+			console.log('What is vals now?', valsIncome);
+
+			db.postingIncomeOnly(colsIncome, valsIncome, signs).then((data) => {
+				console.log('RESULT FROM FB IS', data);
+			});
+
+			// return budgetId;
 		})
 		.catch(function(err) {
 			console.log(err);
 			res.sendStatus(500);
 		});
+	// .then((budgetId) => {
+	// 	let theOutgo = req.body.theOutgo;
+	// 	const colsExpenses = [];
+	// 	const valsExpenses = [];
+	// 	for (var prop in theOutgo) {
+	// 		colsExpenses.push(prop);
+	// 		valsExpenses.push(theOutgo[prop]);
+	// 	}
+	// 	console.log('What is cols now?', colsExpenses);
+	// 	console.log('What is cols now?', valsExpenses);
+
+	// 	// 	db.postingExpensesOnly(budgetId, `${property}`, `${theOutgo[property]}`);
+	// 	// res.json({ success: true });
+	// })
 });
 
 // Getting budgets info for overview:
