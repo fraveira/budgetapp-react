@@ -29,7 +29,7 @@ export default function Overview({ first, id }) {
 					<Col xs={6} className="creatorBtn">
 						<Link className="noUnderline" to="/app/create">
 							<Button variant="success" size="lg" block>
-								Create your first budget, {first}, {id}!
+								Create your first budget, {first}!
 							</Button>
 						</Link>
 					</Col>

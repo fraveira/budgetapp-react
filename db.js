@@ -26,37 +26,24 @@ module.exports.postingBudgetOnly = (id) => {
 };
 
 module.exports.postingIncomeOnly = (id, cat, value) => {
-	console.log('This is the income', cat);
-	if (cat == 'income1') {
-		return db.query(`INSERT INTO incomes (inbudget, income1) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
-	} else if (cat == 'income2') {
-		return db.query(`INSERT INTO incomes (inbudget, income2) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
-	} else if (cat == 'income3') {
-		return db.query(`INSERT INTO incomes (inbudget, income3) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
-	}
+	return db.query(`INSERT INTO incomes (inbudget, ${cat}) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
 };
 
 module.exports.postingExpensesOnly = (id, cat, value) => {
-	console.log('This is the cat for expenses', cat);
-	if (cat == 'outgo1') {
-		return db.query(`INSERT INTO outgos (inbudget, outgo1) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
-	} else if (cat == 'outgo2') {
-		return db.query(`INSERT INTO outgos (inbudget, outgo2) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
-	} else if (cat == 'outgo3') {
-		return db.query(`INSERT INTO outgos (inbudget, outgo3) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
-	} else if (cat == 'outgo4') {
-		return db.query(`INSERT INTO outgos (inbudget, outgo4) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
-	} else if (cat == 'outgo5') {
-		return db.query(`INSERT INTO outgos (inbudget, outgo5) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
-	} else if (cat == 'outgo6') {
-		return db.query(`INSERT INTO outgos (inbudget, outgo6) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
-	} else if (cat == 'outgo7') {
-		return db.query(`INSERT INTO outgos (inbudget, outgo7) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
-	} else if (cat == 'outgo8') {
-		return db.query(`INSERT INTO outgos (inbudget, outgo8) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
-	}
+	return db.query(`INSERT INTO outgos (inbudget, ${cat}) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
 };
 
 module.exports.getRecentBudgets = (id) => {
-	return db.query(`SELECT id FROM budgets WHERE owner = $1 ORDER BY id DESC LIMIT 3 `, [ id ]);
+	return db.query(`SELECT id, created_at FROM budgets WHERE owner = $1 ORDER BY id DESC LIMIT 3 `, [ id ]);
+};
+
+module.exports.gettingIncomeOnly = (budgetId) => {
+	return db.query(`SELECT income1, income2, income3 FROM incomes WHERE inbudget = $1`, [ budgetId ]);
+};
+
+module.exports.gettingExpensesOnly = (budgetId) => {
+	return db.query(
+		`SELECT outgo1, outgo2, outgo3, outgo4, outgo5, outgo6, outgo7, outgo8 FROM outgos WHERE inbudget = $1`,
+		[ budgetId ]
+	);
 };

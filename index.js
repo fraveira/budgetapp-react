@@ -165,9 +165,12 @@ app.post('/api/newbudget/:userId', (req, res) => {
 		})
 		.then((budgetId) => {
 			console.log('New COSA AQUÍ', req.body.theIncome);
+			// const cols = ['outgo1', 'outgo2']
+			// const vals = [100, 200]
+
+			// const query = `INSERT INTO TABLE (${})`
 			let theIncome = req.body.theIncome;
 			for (const property in theIncome) {
-				console.log('The loop!', budgetId, `${property}`, `${theIncome[property]}`);
 				db.postingIncomeOnly(budgetId, `${property}`, `${theIncome[property]}`);
 			}
 			return budgetId;
@@ -176,7 +179,6 @@ app.post('/api/newbudget/:userId', (req, res) => {
 			console.log('New COSA AQUÍ', req.body.theOutgo);
 			let theOutgo = req.body.theOutgo;
 			for (const property in theOutgo) {
-				console.log('The loop!', budgetId, `${property}`, `${theOutgo[property]}`);
 				db.postingExpensesOnly(budgetId, `${property}`, `${theOutgo[property]}`);
 			}
 			res.json({ success: true });
@@ -190,13 +192,33 @@ app.post('/api/newbudget/:userId', (req, res) => {
 // Getting budgets info for overview:
 
 app.get('/api/budgets/:userId', async (req, res) => {
-	try {
-		const { rows } = await db.getRecentBudgets(req.params.userId);
-		res.json(rows);
-	} catch (err) {
-		console.log(err);
-		res.sendStatus(500);
-	}
+	let userId = Number(req.params.userId);
+	db
+		.getRecentBudgets(userId)
+		.then(function({ rows }) {
+			console.log('Are we getting here at all? Yes', rows[0].id);
+			let budgetId = rows[0].id;
+			return budgetId;
+		})
+		.then((budgetId) => {
+			db.gettingIncomeOnly(budgetId).then(function({ rows }) {
+				console.log('These are new rows for Incomes', rows[0]);
+				res.json(rows);
+			});
+			return budgetId;
+		})
+		.then((budgetId) => {
+			console.log('Are we getting the budget id here? YES', budgetId);
+			db.gettingExpensesOnly(budgetId).then(function({ rows }) {
+				console.log('These are new rows for Expenses', rows[0]);
+				res.json(rows);
+				return budgetId;
+			});
+		})
+		.catch(function(err) {
+			console.log(err);
+			res.sendStatus(500);
+		});
 });
 
 // Logout route:
