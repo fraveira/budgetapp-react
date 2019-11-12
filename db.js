@@ -56,3 +56,7 @@ module.exports.postingExpensesOnly = (id, cat, value) => {
 		return db.query(`INSERT INTO outgos (inbudget, outgo8) values ($1, $2) RETURNING inbudget;`, [ id, value ]);
 	}
 };
+
+module.exports.getRecentBudgets = (id) => {
+	return db.query(`SELECT id FROM budgets WHERE owner = $1 ORDER BY id DESC LIMIT 3 `, [ id ]);
+};

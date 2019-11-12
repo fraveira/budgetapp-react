@@ -37,7 +37,7 @@ export class App extends React.Component {
 							path="/app/overview"
 							render={(props) => (
 								<section>
-									<Overview first={this.state.first} />
+									<Overview first={this.state.first} id={this.state.id} />
 								</section>
 							)}
 						/>

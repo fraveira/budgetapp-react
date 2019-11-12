@@ -185,22 +185,18 @@ app.post('/api/newbudget/:userId', (req, res) => {
 			console.log(err);
 			res.sendStatus(500);
 		});
+});
 
-	// 	.then((areTheSame) => {
-	// 		if (areTheSame) {
-	// 			db.loggedIdCheck(email).then((id) => {
-	// 				req.session.userId = id.rows[0].id;
-	// 				console.log('LOGGED IN: User id is', req.session.userId);
-	// 				res.json({ success: true });
-	// 			});
-	// 		} else {
-	// 			res.json({ success: false });
-	// 		}
-	// 	})
-	// 	.catch((error) => {
-	// 		console.log('This is catching an error happening in comparing passwords', error);
-	// 		res.json({ success: false });
-	// 	});
+// Getting budgets info for overview:
+
+app.get('/api/budgets/:userId', async (req, res) => {
+	try {
+		const { rows } = await db.getRecentBudgets(req.params.userId);
+		res.json(rows);
+	} catch (err) {
+		console.log(err);
+		res.sendStatus(500);
+	}
 });
 
 // Logout route:
