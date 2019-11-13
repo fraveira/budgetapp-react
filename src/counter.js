@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from './axios';
 import { Jumbotron, Button, Col } from 'react-bootstrap';
 
-const Counter = ({ totalIncome, totalOutgo, theIncome, theOutgo, userId }) => {
+const Counter = ({ totalIncome, totalOutgo, theIncome, theOutgo, userId, theBudget }) => {
 	const left = totalIncome - totalOutgo;
+	console.log('The BUDGET IN THE COUNTER!!!', theBudget);
 	console.log('The incomes', theIncome);
 	console.log('The outgos', theOutgo);
 	console.log("This is what's left", left);
@@ -14,7 +15,8 @@ const Counter = ({ totalIncome, totalOutgo, theIncome, theOutgo, userId }) => {
 			const { data } = await axios
 				.post(`/api/newbudget/${userId}`, {
 					theIncome,
-					theOutgo
+					theOutgo,
+					theBudget
 				})
 				.then(({ data }) => {
 					console.log('Data success?', data.success);

@@ -4,16 +4,18 @@ import Counter from './counter';
 import axios from './axios';
 import { Button, Navbar } from 'react-bootstrap';
 
-export default function Editor(props, { first, last, id }) {
+export default function Editor(props) {
 	const [ income, setIncome ] = useState({});
 	const [ expenses, setExpenses ] = useState({});
 	const [ sumIncome, setSumIncome ] = useState(0);
 	const [ sumExpenses, setSumExpenses ] = useState(0);
-
+	const [ budget, setBudget ] = useState();
 	useEffect(() => {
-		const { budgetId } = props.match.params;
+		const budgetId = props.match.params.id;
 		(async () => {
 			const { data } = await axios.get(`/api/edit/${budgetId}`);
+			console.log('Data setting to pass the budget id', data[0].id);
+			setBudget(data[0].id);
 			let forIncomes = {};
 			for (let key in data[0]) {
 				if (key.includes('income')) forIncomes[key] = data[0][key];
@@ -174,6 +176,7 @@ export default function Editor(props, { first, last, id }) {
 									theIncome={income}
 									theOutgo={expenses}
 									userId={props.id}
+									theBudget={budget}
 								/>
 							</Navbar>
 						</Col>

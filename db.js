@@ -21,6 +21,8 @@ module.exports.getUserById = (id) => {
 	return db.query(`SELECT id, username, first, last FROM users WHERE id = $1`, [ id ]);
 };
 
+// Creating data in the database.
+
 module.exports.postingBudgetOnly = (id) => {
 	return db.query(`INSERT INTO budgets (owner) values ($1) RETURNING id;`, [ id ]);
 };
@@ -30,6 +32,8 @@ module.exports.postingIncomeOnly = (cat, value, signs) => {
 		`
     INSERT INTO incomes (inbudget, ${cat + ''}) 
     values (${signs + ''})
+    ON CONFLICT (inbudget)
+    DO UPDATE SET DYNAMIC PROPERTY = DYNAMIC VALUE 
     RETURNING inbudget;`,
 		value
 	);
@@ -74,3 +78,54 @@ module.exports.getSpecifiedBudget = (id) => {
 		[ id ]
 	);
 };
+
+// Editing databases. Only chaining one (incomes) and then the other (outgos.)
+
+module.exports.updatingIncomeOnly = (id, income1, income2, income3) => {
+	return db.query(
+		`
+    UPDATE incomes  
+    SET income1=$2, income2=$3, income3=$4
+    WHERE inbudget=$1
+    RETURNING inbudget;`,
+		[ id, income1 || null, income2 || null, income3 || null ]
+	);
+};
+
+module.exports.updatingExpensesOnly = (id, outgo1, outgo2, outgo3, outgo4, outgo5, outgo6, outgo7, outgo8) => {
+	return db.query(
+		`
+    UPDATE outgos  
+    SET outgo1=$2, outgo2=$3, outgo3=$4, outgo4=$5, outgo5=$6, outgo6=$7, outgo7=$8, outgo8=$9
+    WHERE inbudget=$1
+    RETURNING inbudget;`,
+		[
+			id,
+			outgo1 || null,
+			outgo2 || null,
+			outgo3 || null,
+			outgo4 || null,
+			outgo5 || null,
+			outgo6 || null,
+			outgo7 || null,
+			outgo8 || null
+		]
+	);
+};
+
+//
+// {
+//     income1: 200,
+//     income2: 200
+// }
+
+// const updateParts = Object.keys(obj).map(
+//     (key, index) => key + '=' + '$' + (index+1)
+// )
+// Object.values(obj)
+// Tasks to accomplish this:
+// 1) I need to know exactly the db query that I will need.
+// 2) I Need to update tables INCOMES, OUTGOS, where inbudget = $1 ((now we now the row)), with the values
+// "inbudget=$2, income1=$3, income2=$3",
+// 3) If the value of any income1 is null, I want it out of my array.
+// 4).

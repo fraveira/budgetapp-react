@@ -147,70 +147,105 @@ app.get('/user', async (req, res) => {
 });
 
 // Submitting budget route:
+// WE need to tweak some stuff to make the posting after edit possible.
 
 app.post('/api/newbudget/:userId', (req, res) => {
-	let userId = Number(req.params.userId);
+	let userId = Number(req.session.userId);
+	console.log('We are getting the budget! yujuu', req.body.theBudget);
+	if (req.body.theBudget) {
+		// The budget is a number, so no problem.
+		let prevBud = req.body.theBudget;
+		let theIncome = req.body.theIncome;
+		console.log('The income with some propertiesss', theIncome);
+		const colsIncome = [];
+		const valsIncome = [];
+		let theOutgo = req.body.theOutgo;
 
-	console.log('This is in post new budget thingy', req.body.theIncome);
-	console.log('This is in post new budget thingy', req.body.theOutgo);
-	console.log("This is the userId that's posting", userId);
-
-	db
-		.postingBudgetOnly(userId)
-		.then(function({ rows }) {
-			let budgetId = rows[0].id;
-			return budgetId;
-		})
-		.then((budgetId) => {
-			let theIncome = req.body.theIncome;
-			const colsIncome = [];
-			const valsIncome = [];
-			for (var prop in theIncome) {
-				colsIncome.push(prop);
-				valsIncome.push(theIncome[prop]);
-			}
-
-			valsIncome.unshift(budgetId);
-
-			let signs = [];
-
-			valsIncome.forEach((e, i) => {
-				signs.push(`$${i + 1}`);
+		db
+			.updatingIncomeOnly(prevBud, theIncome.income1, theIncome.income2, theIncome.income3)
+			.then((data) => {
+				db
+					.updatingExpensesOnly(
+						prevBud,
+						theOutgo.outgo1,
+						theOutgo.outgo2,
+						theOutgo.outgo3,
+						theOutgo.outgo4,
+						theOutgo.outgo5,
+						theOutgo.outgo6,
+						theOutgo.outgo7,
+						theOutgo.outgo8
+					)
+					.then((data) => {
+						res.json({ success: true });
+					});
+			})
+			.catch(function(err) {
+				console.log(err);
+				res.sendStatus(500);
 			});
 
-			db.postingIncomeOnly(colsIncome, valsIncome, signs).then((data) => {
-				console.log('RESULT FROM posting income IS', data);
+		return prevBud;
+	} else {
+		db
+			.postingBudgetOnly(userId)
+			.then(function({ rows }) {
+				let budgetId = rows[0].id;
+				return budgetId;
+			})
+			.then((budgetId) => {
+				console.log('What is budget?', budgetId);
+				console.log('What datatype is budget?', typeof budgetId);
+				let theIncome = req.body.theIncome;
+				const colsIncome = [];
+				const valsIncome = [];
+				for (var prop in theIncome) {
+					colsIncome.push(prop);
+					valsIncome.push(theIncome[prop]);
+				}
+
+				valsIncome.unshift(budgetId);
+
+				let signs = [];
+
+				valsIncome.forEach((e, i) => {
+					signs.push(`$${i + 1}`);
+				});
+
+				db.postingIncomeOnly(colsIncome, valsIncome, signs).then((data) => {
+					console.log('RESULT FROM posting income IS', data);
+				});
+
+				return budgetId;
+			})
+			.then((budgetId) => {
+				let theOutgo = req.body.theOutgo;
+				const colsExpenses = [];
+				const valsExpenses = [];
+
+				for (var prop in theOutgo) {
+					colsExpenses.push(prop);
+					valsExpenses.push(theOutgo[prop]);
+				}
+
+				valsExpenses.unshift(budgetId);
+
+				let signs2 = [];
+
+				valsExpenses.forEach((e, i) => {
+					signs2.push(`$${i + 1}`);
+				});
+
+				db.postingExpensesOnly(colsExpenses, valsExpenses, signs2).then((data) => {
+					console.log('RESULT FROM posting outgos IS', data);
+					res.json({ success: true });
+				});
+			})
+			.catch(function(err) {
+				console.log(err);
+				res.sendStatus(500);
 			});
-
-			return budgetId;
-		})
-		.then((budgetId) => {
-			let theOutgo = req.body.theOutgo;
-			const colsExpenses = [];
-			const valsExpenses = [];
-
-			for (var prop in theOutgo) {
-				colsExpenses.push(prop);
-				valsExpenses.push(theOutgo[prop]);
-			}
-
-			valsExpenses.unshift(budgetId);
-
-			let signs2 = [];
-
-			valsExpenses.forEach((e, i) => {
-				signs2.push(`$${i + 1}`);
-			});
-
-			db.postingExpensesOnly(colsExpenses, valsExpenses, signs2).then((data) => {
-				console.log('RESULT FROM posting outgos IS', data);
-				res.json({ success: true });
-			});
-		})
-		.catch(function(err) {
-			console.log(err);
-			res.sendStatus(500);
-		});
+	}
 });
 
 // Getting budgets info for overview:

@@ -24,7 +24,6 @@ export default function Creator({ first, last, id }) {
 	console.log('These are the expenses', expenses);
 	const keyCheckIncome = (e) => {
 		if (e.key === 'Enter' || e.key === 'Tab') {
-			console.log('This is e.target.name', e.target.name);
 			setIncome({
 				...income,
 				[e.target.name]: Number(e.target.value)
@@ -34,7 +33,6 @@ export default function Creator({ first, last, id }) {
 
 	const keyCheckExpenses = (e) => {
 		if (e.key === 'Enter' || e.key === 'Tab') {
-			console.log('This is e.target.name', e.target.name);
 			setExpenses({
 				...expenses,
 				[e.target.name]: Number(e.target.value)

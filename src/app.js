@@ -53,9 +53,15 @@ export class App extends React.Component {
 							)}
 						/>
 						<Route
-							path="/app/edit/:budgetId"
-							component={Editor}
-							
+							path="/app/edit/:id"
+							render={(props) => (
+								<Editor
+									key={props.match.url}
+									match={props.match}
+									history={props.history}
+									id={this.state.id}
+								/>
+							)}
 						/>
 					</React.Fragment>
 				</BrowserRouter>
