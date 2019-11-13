@@ -32,8 +32,6 @@ module.exports.postingIncomeOnly = (cat, value, signs) => {
 		`
     INSERT INTO incomes (inbudget, ${cat + ''}) 
     values (${signs + ''})
-    ON CONFLICT (inbudget)
-    DO UPDATE SET DYNAMIC PROPERTY = DYNAMIC VALUE 
     RETURNING inbudget;`,
 		value
 	);
@@ -113,19 +111,30 @@ module.exports.updatingExpensesOnly = (id, outgo1, outgo2, outgo3, outgo4, outgo
 	);
 };
 
-//
-// {
-//     income1: 200,
-//     income2: 200
-// }
+// DELETION ROUTES
 
-// const updateParts = Object.keys(obj).map(
-//     (key, index) => key + '=' + '$' + (index+1)
-// )
-// Object.values(obj)
-// Tasks to accomplish this:
-// 1) I need to know exactly the db query that I will need.
-// 2) I Need to update tables INCOMES, OUTGOS, where inbudget = $1 ((now we now the row)), with the values
-// "inbudget=$2, income1=$3, income2=$3",
-// 3) If the value of any income1 is null, I want it out of my array.
-// 4).
+module.exports.deleteBudget = (userId, budgetId) => {
+	return db.query(
+		`DELETE FROM budgets
+        WHERE budgets.owner = $1
+        AND budgets.id = $2`,
+		[ userId, budgetId ]
+	);
+};
+
+module.exports.deleteIncome = (budgetId) => {
+	return db.query(
+		`DELETE FROM incomes
+        WHERE incomes.inbudget = $1`,
+		[ budgetId ]
+	);
+	q;
+};
+
+module.exports.deleteExpenses = (budgetId) => {
+	return db.query(
+		`DELETE FROM outgos
+        WHERE outgos.inbudget = $1`,
+		[ budgetId ]
+	);
+};

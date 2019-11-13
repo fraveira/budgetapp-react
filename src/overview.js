@@ -20,6 +20,18 @@ export default function Overview({ first, id }) {
 		[ id ]
 	);
 
+	const deleteBudget = (id) => {
+		console.log('This budget', id);
+		(async () => {
+			const { data } = await axios.delete(`/api/delete/${id}`, {}).then(({ data }) => {
+				console.log('Data success?', data.success);
+				if (data.success) {
+					location.replace('/');
+				}
+			});
+		})();
+	};
+
 	return (
 		<React.Fragment>
 			<Container>
@@ -87,9 +99,9 @@ export default function Overview({ first, id }) {
 									</Link>
 								</Col>
 								<Col lg={6} xs={12}>
-									<Link className="noUnderline" to={'/app/delete/' + budget.id}>
-										<Button variant="danger">Delete this Budget</Button>
-									</Link>
+									<Button variant="danger" onClick={() => deleteBudget(budget.id)}>
+										Delete this Budget
+									</Button>
 								</Col>
 							</Row>
 						</Col>

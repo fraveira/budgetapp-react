@@ -153,10 +153,8 @@ app.post('/api/newbudget/:userId', (req, res) => {
 	let userId = Number(req.session.userId);
 	console.log('We are getting the budget! yujuu', req.body.theBudget);
 	if (req.body.theBudget) {
-		// The budget is a number, so no problem.
 		let prevBud = req.body.theBudget;
 		let theIncome = req.body.theIncome;
-		console.log('The income with some propertiesss', theIncome);
 		const colsIncome = [];
 		const valsIncome = [];
 		let theOutgo = req.body.theOutgo;
@@ -281,11 +279,46 @@ app.get('/api/edit/:budgetId', async (req, res) => {
 		});
 });
 
+// Delete route:
+
+app.delete('/api/delete/:budgetId', (req, res) => {
+	console.log('Lets see if I hit this route anyway', req.params.budgetId);
+	console.log('User id is', req.session.userId);
+	let userId = req.session.userId;
+	const budgetor = Number(req.params.budgetId);
+
+	db
+		.deleteIncome(budgetor)
+		.then(function({ rows }) {})
+		.then(() => {
+			db.deleteExpenses(budgetor).then((data) => {});
+		})
+		.then(() => {
+			db.deleteBudget(userId, budgetor).then((data) => {
+				res.json({ success: true });
+			});
+		})
+		.catch(function(err) {
+			console.log(err);
+			res.sendStatus(500);
+		});
+});
+
 // Logout route:
 
 app.get('/logout', function(req, res) {
 	req.session = null;
 	res.redirect('/register');
+});
+
+//
+
+app.get('/', (req, res) => {
+	if (req.session.userId) {
+		res.redirect('/app/overview');
+	} else {
+		res.redirect('/login');
+	}
 });
 
 // leave as it is.
