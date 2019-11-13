@@ -5,7 +5,6 @@ import Header from './header';
 import Overview from './overview';
 import Creator from './creator';
 import Editor from './editor';
-import { Button, Container, Row, Col } from 'react-bootstrap';
 
 export class App extends React.Component {
 	constructor() {
@@ -20,7 +19,6 @@ export class App extends React.Component {
 	async componentDidMount() {
 		axios.get('/user').then(({ data }) => {
 			this.setState(data);
-			console.log('Data is this:', data);
 		});
 	}
 

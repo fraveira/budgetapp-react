@@ -121,7 +121,6 @@ app.post('/login', (req, res) => {
 			if (areTheSame) {
 				db.loggedIdCheck(email).then((id) => {
 					req.session.userId = id.rows[0].id;
-					console.log('LOGGED IN: User id is', req.session.userId);
 					res.json({ success: true });
 				});
 			} else {
@@ -151,7 +150,6 @@ app.get('/user', async (req, res) => {
 
 app.post('/api/newbudget/:userId', (req, res) => {
 	let userId = Number(req.session.userId);
-	console.log('We are getting the budget! yujuu', req.body.theBudget);
 	if (req.body.theBudget) {
 		let prevBud = req.body.theBudget;
 		let theIncome = req.body.theIncome;
@@ -192,8 +190,6 @@ app.post('/api/newbudget/:userId', (req, res) => {
 				return budgetId;
 			})
 			.then((budgetId) => {
-				console.log('What is budget?', budgetId);
-				console.log('What datatype is budget?', typeof budgetId);
 				let theIncome = req.body.theIncome;
 				const colsIncome = [];
 				const valsIncome = [];
@@ -210,9 +206,7 @@ app.post('/api/newbudget/:userId', (req, res) => {
 					signs.push(`$${i + 1}`);
 				});
 
-				db.postingIncomeOnly(colsIncome, valsIncome, signs).then((data) => {
-					console.log('RESULT FROM posting income IS', data);
-				});
+				db.postingIncomeOnly(colsIncome, valsIncome, signs).then((data) => {});
 
 				return budgetId;
 			})
@@ -235,7 +229,6 @@ app.post('/api/newbudget/:userId', (req, res) => {
 				});
 
 				db.postingExpensesOnly(colsExpenses, valsExpenses, signs2).then((data) => {
-					console.log('RESULT FROM posting outgos IS', data);
 					res.json({ success: true });
 				});
 			})
@@ -266,8 +259,6 @@ app.get('/api/budgets/:userId', async (req, res) => {
 app.get('/api/edit/:budgetId', async (req, res) => {
 	let userId = req.session.userId;
 	let budgetId = Number(req.params.budgetId);
-	console.log('UserId to edit his budget!', userId);
-	console.log('Numberizing params', budgetId);
 	db
 		.getSpecifiedBudget(budgetId)
 		.then(function({ rows }) {
@@ -282,8 +273,6 @@ app.get('/api/edit/:budgetId', async (req, res) => {
 // Delete route:
 
 app.delete('/api/delete/:budgetId', (req, res) => {
-	console.log('Lets see if I hit this route anyway', req.params.budgetId);
-	console.log('User id is', req.session.userId);
 	let userId = req.session.userId;
 	const budgetor = Number(req.params.budgetId);
 

@@ -14,7 +14,6 @@ export default function Editor(props) {
 		const budgetId = props.match.params.id;
 		(async () => {
 			const { data } = await axios.get(`/api/edit/${budgetId}`);
-			console.log('Data setting to pass the budget id', data[0].id);
 			setBudget(data[0].id);
 			let forIncomes = {};
 			for (let key in data[0]) {

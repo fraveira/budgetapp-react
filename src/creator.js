@@ -11,7 +11,6 @@ export default function Creator({ first, last, id }) {
 
 	useEffect(
 		() => {
-			console.log('The sum', Object.values(income));
 			let sumOfIncomes = Object.values(income).reduce((a, b) => a + b, 0);
 			setSumIncome(sumOfIncomes);
 			let sumOfExpenses = Object.values(expenses).reduce((a, b) => a + b, 0);
@@ -19,9 +18,6 @@ export default function Creator({ first, last, id }) {
 		},
 		[ income, expenses ]
 	);
-
-	console.log('This is the income', income);
-	console.log('These are the expenses', expenses);
 	const keyCheckIncome = (e) => {
 		if (e.key === 'Enter' || e.key === 'Tab') {
 			setIncome({

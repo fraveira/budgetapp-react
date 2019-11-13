@@ -4,11 +4,6 @@ import { Jumbotron, Button, Col } from 'react-bootstrap';
 
 const Counter = ({ totalIncome, totalOutgo, theIncome, theOutgo, userId, theBudget }) => {
 	const left = totalIncome - totalOutgo;
-	console.log('The BUDGET IN THE COUNTER!!!', theBudget);
-	console.log('The incomes', theIncome);
-	console.log('The outgos', theOutgo);
-	console.log("This is what's left", left);
-	console.log('This is the user id', userId);
 
 	const submitBudget = () => {
 		(async () => {
@@ -19,7 +14,6 @@ const Counter = ({ totalIncome, totalOutgo, theIncome, theOutgo, userId, theBudg
 					theBudget
 				})
 				.then(({ data }) => {
-					console.log('Data success?', data.success);
 					if (data.success) {
 						location.replace('/app/overview');
 					}

@@ -21,7 +21,7 @@ module.exports.getUserById = (id) => {
 	return db.query(`SELECT id, username, first, last FROM users WHERE id = $1`, [ id ]);
 };
 
-// Creating data in the database.
+// Creating BUDGET in the database.
 
 module.exports.postingBudgetOnly = (id) => {
 	return db.query(`INSERT INTO budgets (owner) values ($1) RETURNING id;`, [ id ]);
@@ -128,7 +128,6 @@ module.exports.deleteIncome = (budgetId) => {
         WHERE incomes.inbudget = $1`,
 		[ budgetId ]
 	);
-	q;
 };
 
 module.exports.deleteExpenses = (budgetId) => {

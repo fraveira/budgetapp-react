@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Button, Tabs, Tab } from 'react-bootstrap';
+import { Container, Row, Col, Button, Tabs, Tab, Modal } from 'react-bootstrap';
 import axios from './axios';
 import { Link } from 'react-router-dom';
 
 export default function Overview({ first, id }) {
 	const [ budgets, setBudgets ] = useState([]);
-	console.log('This is the user id', id);
+	const [ show, setShow ] = useState(false);
+
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
 
 	useEffect(
 		() => {
@@ -21,10 +24,8 @@ export default function Overview({ first, id }) {
 	);
 
 	const deleteBudget = (id) => {
-		console.log('This budget', id);
 		(async () => {
 			const { data } = await axios.delete(`/api/delete/${id}`, {}).then(({ data }) => {
-				console.log('Data success?', data.success);
 				if (data.success) {
 					location.replace('/');
 				}
@@ -91,19 +92,39 @@ export default function Overview({ first, id }) {
 										{budget.outgo8 && <p>Health and Beauty {budget.outgo8}</p>}
 									</Tab>
 								</Tabs>
+								<Row>
+									<Col lg={6} xs={12}>
+										<Link className="noUnderline" to={'/app/edit/' + budget.id}>
+											<Button variant="warning" size="sm">
+												Edit budget
+											</Button>
+										</Link>
+									</Col>
+									<Col lg={6} xs={12}>
+										<Button variant="danger" size="sm" onClick={handleShow}>
+											Delete budget
+										</Button>
+
+										<Modal show={show} onHide={handleClose}>
+											<Modal.Header closeButton>
+												<Modal.Title>Deleting your budget</Modal.Title>
+											</Modal.Header>
+											<Modal.Body>
+												Hey {first}! You can't undo this action! Are you sure you want to delete
+												this budget?
+											</Modal.Body>
+											<Modal.Footer>
+												<Button variant="secondary" onClick={handleClose}>
+													Close
+												</Button>
+												<Button variant="danger" onClick={() => deleteBudget(budget.id)}>
+													Yes, Delete
+												</Button>
+											</Modal.Footer>
+										</Modal>
+									</Col>
+								</Row>
 							</div>
-							<Row>
-								<Col lg={6} xs={12}>
-									<Link className="noUnderline" to={'/app/edit/' + budget.id}>
-										<Button variant="warning">Edit your Budget</Button>
-									</Link>
-								</Col>
-								<Col lg={6} xs={12}>
-									<Button variant="danger" onClick={() => deleteBudget(budget.id)}>
-										Delete this Budget
-									</Button>
-								</Col>
-							</Row>
 						</Col>
 					))}
 				</Row>
