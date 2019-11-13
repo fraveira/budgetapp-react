@@ -74,11 +74,3 @@ module.exports.getSpecifiedBudget = (id) => {
 		[ id ]
 	);
 };
-
-// module.exports.gettingIncomeOnly = (budgetId) => {
-// 	return db.query(`SELECT * FROM incomes WHERE inbudget = $1`, [ budgetId ]);
-// };
-
-// module.exports.gettingExpensesOnly = (budgetId) => {
-// 	return db.query(`SELECT * FROM outgos WHERE inbudget = $1`, [ budgetId ]);
-// };

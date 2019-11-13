@@ -238,7 +238,6 @@ app.get('/api/edit/:budgetId', async (req, res) => {
 	db
 		.getSpecifiedBudget(budgetId)
 		.then(function({ rows }) {
-			console.log('EDITING BUDGETS!', rows);
 			res.json(rows);
 		})
 		.catch(function(err) {
