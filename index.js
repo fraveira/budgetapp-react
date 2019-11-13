@@ -140,7 +140,6 @@ app.get('/user', async (req, res) => {
 	try {
 		const { rows } = await db.getUserById(req.session.userId);
 		res.json(rows[0]);
-		console.log('Rows are these', rows[0]);
 	} catch (err) {
 		console.log(err);
 		res.sendStatus(500);
@@ -221,7 +220,25 @@ app.get('/api/budgets/:userId', async (req, res) => {
 	db
 		.getRecentBudgets(userId)
 		.then(function({ rows }) {
-			console.log('Budget ID and other stuff', rows);
+			res.json(rows);
+		})
+		.catch(function(err) {
+			console.log(err);
+			res.sendStatus(500);
+		});
+});
+
+//  Getting budgets to edit them:
+
+app.get('/api/edit/:budgetId', async (req, res) => {
+	let userId = req.session.userId;
+	let budgetId = Number(req.params.budgetId);
+	console.log('UserId to edit his budget!', userId);
+	console.log('Numberizing params', budgetId);
+	db
+		.getSpecifiedBudget(budgetId)
+		.then(function({ rows }) {
+			console.log('EDITING BUDGETS!', rows);
 			res.json(rows);
 		})
 		.catch(function(err) {

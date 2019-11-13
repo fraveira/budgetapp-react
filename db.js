@@ -60,6 +60,21 @@ module.exports.getRecentBudgets = (id) => {
 	);
 };
 
+module.exports.getSpecifiedBudget = (id) => {
+	return db.query(
+		`SELECT budgets.id, incomes.income1, incomes.income2, incomes.income3, outgos.outgo1, outgos.outgo2, outgos.outgo3, outgos.outgo4, outgos.outgo5, outgos.outgo6, outgos.outgo7, outgos.outgo8
+    FROM budgets 
+    INNER JOIN incomes
+    ON ( incomes.inbudget = budgets.id) 
+    INNER JOIN outgos
+    ON (outgos.inbudget = budgets.id)
+    WHERE budgets.id = $1
+    ORDER BY id 
+    LIMIT 1 `,
+		[ id ]
+	);
+};
+
 // module.exports.gettingIncomeOnly = (budgetId) => {
 // 	return db.query(`SELECT * FROM incomes WHERE inbudget = $1`, [ budgetId ]);
 // };

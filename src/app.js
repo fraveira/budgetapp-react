@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Header from './header';
 import Overview from './overview';
 import Creator from './creator';
+import Editor from './editor';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 
 export class App extends React.Component {
@@ -50,6 +51,11 @@ export class App extends React.Component {
 									<Creator first={this.state.first} last={this.state.last} id={this.state.id} />
 								</section>
 							)}
+						/>
+						<Route
+							path="/app/edit/:budgetId"
+							component={Editor}
+							
 						/>
 					</React.Fragment>
 				</BrowserRouter>
