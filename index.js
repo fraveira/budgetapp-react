@@ -275,14 +275,18 @@ app.get('/api/edit/:budgetId', async (req, res) => {
 app.delete('/api/delete/:budgetId', (req, res) => {
 	let userId = req.session.userId;
 	const budgetor = Number(req.params.budgetId);
+	console.log('This is the budget we are trying to delete', budgetor);
 
 	db
 		.deleteIncome(budgetor)
 		.then(function({ rows }) {})
 		.then(() => {
+			console.log('This is the budget we are tyring to delete, lvl down', budgetor);
 			db.deleteExpenses(budgetor).then((data) => {});
 		})
 		.then(() => {
+			console.log('This is the budget we are tyring to delete, 2lvl down', budgetor);
+			console.log('This is the userId we are tyring to delete, 2lvl down', userId);
 			db.deleteBudget(userId, budgetor).then((data) => {
 				res.json({ success: true });
 			});

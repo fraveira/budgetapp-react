@@ -1,3 +1,6 @@
+body {
+	background-color: #f5f7f8;
+}
 .regh2 {
 	text-align: center;
 	margin-top: 25px;
@@ -17,7 +20,9 @@
 }
 
 .counterJumbo {
-	padding: 8rem 5rem;
+	padding: 1rem 0.75rem;
+	width: 413px;
+	height: auto;
 }
 
 .previousBudgets {
@@ -31,4 +36,21 @@
 	border-width: .2rem .2rem .2rem;
 	border-radius: 8px 8px 8px 8px;
 	padding: 10px 20px 10px 20px;
+}
+
+.jumbotron {
+	background-color: #11111100;
+}
+
+.incomeBtn:hover {
+	cursor: default;
+}
+
+.incomeBtn {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.centerh5s {
+	text-align: center;
 }

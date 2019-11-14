@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from './axios';
-import { Jumbotron, Button, Col } from 'react-bootstrap';
+import { Jumbotron, Button, Col, ToggleButton } from 'react-bootstrap';
 import { Pie } from 'react-chartjs-2';
 
 const Counter = ({ totalIncome, totalOutgo, theIncome, theOutgo, userId, theBudget }) => {
@@ -73,20 +73,41 @@ const Counter = ({ totalIncome, totalOutgo, theIncome, theOutgo, userId, theBudg
 		return (
 			<React.Fragment>
 				<Jumbotron className="counterJumbo">
-					<Pie data={data} />
 					<div>
-						<p>Here Income {totalIncome || 0} €</p>
-						<p>Here Outgo {totalOutgo || 0} €</p>
-						<p>Here Left to budget {left || 0} €</p>
+						<Pie data={data} width={100} height={250} options={{ maintainAspectRatio: false }} />
 					</div>
-					{left == 0 && totalIncome > 0 && <h5>This is a Zero-Based Budget!</h5>}
+					<div>
+						{totalIncome > 0 && (
+							<Button className="incomeBtn" variant="primary" active block>
+								Total Income {totalIncome || 0} €
+							</Button>
+						)}
+
+						{totalIncome == 0 && (
+							<Button className="incomeBtn" variant="primary" active block>
+								Add your Income!
+							</Button>
+						)}
+
+						{left !== 0 && (
+							<Button className="incomeBtn" variant="danger" active block>
+								Left to budget {left || 0} €
+							</Button>
+						)}
+					</div>
+					{left == 0 && totalIncome > 0 && <h5 className="centerh5s">This is a Zero-Based Budget!</h5>}
 					{left == 0 &&
 					totalIncome > 0 && (
-						<Button variant="success" onClick={submitBudget}>
+						<Button variant="success" onClick={submitBudget} block>
 							Submit me!
 						</Button>
 					)}
-					{left < 0 && totalIncome > 0 && <Button variant="danger">You are overspending!</Button>}
+					{left < 0 &&
+					totalIncome > 0 && (
+						<Button className="incomeBtn" variant="warning" block>
+							You are overspending!
+						</Button>
+					)}
 				</Jumbotron>
 			</React.Fragment>
 		);

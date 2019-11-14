@@ -40,7 +40,7 @@ export default function Creator({ first, last, id }) {
 		<React.Fragment>
 			<Container>
 				<Row>
-					<Col md={6}>
+					<Col md={7}>
 						<h2>This is your new budget!</h2>
 						<h3>INCOME for the month:</h3>
 						<h3>Salary 1</h3>
@@ -89,7 +89,7 @@ export default function Creator({ first, last, id }) {
 						€ <input placeholder="Insert Income" type="number" name="outgo8" onKeyDown={keyCheckExpenses} />
 						<p>{expenses.outgo8}</p>
 					</Col>
-					<Col md={6}>
+					<Col md={5}>
 						<Navbar sticky="top" className="stickyCounter">
 							<Counter
 								totalIncome={sumIncome}

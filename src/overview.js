@@ -6,9 +6,12 @@ import { Link } from 'react-router-dom';
 export default function Overview({ first, id }) {
 	const [ budgets, setBudgets ] = useState([]);
 	const [ show, setShow ] = useState(false);
+	const [ activeBudget, setActiveBudget ] = useState('');
 
 	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+	// const setActiveBudget = (budget) => budget({ activeBudget: budget });
+
+	const handleShow = (budget) => setShow(budget);
 
 	useEffect(
 		() => {
@@ -101,32 +104,30 @@ export default function Overview({ first, id }) {
 										</Link>
 									</Col>
 									<Col lg={6} xs={12}>
-										<Button variant="danger" size="sm" onClick={handleShow}>
+										<Button variant="danger" size="sm" onClick={() => handleShow(budget.id)}>
 											Delete budget
 										</Button>
-
-										<Modal show={show} onHide={handleClose}>
-											<Modal.Header closeButton>
-												<Modal.Title>Deleting your budget</Modal.Title>
-											</Modal.Header>
-											<Modal.Body>
-												Hey {first}! You can't undo this action! Are you sure you want to delete
-												this budget?
-											</Modal.Body>
-											<Modal.Footer>
-												<Button variant="secondary" onClick={handleClose}>
-													Close
-												</Button>
-												<Button variant="danger" onClick={() => deleteBudget(budget.id)}>
-													Yes, Delete
-												</Button>
-											</Modal.Footer>
-										</Modal>
 									</Col>
 								</Row>
 							</div>
 						</Col>
 					))}
+					<Modal show={show} onHide={handleClose}>
+						<Modal.Header closeButton>
+							<Modal.Title>Deleting your budget</Modal.Title>
+						</Modal.Header>
+						<Modal.Body>
+							Hey {first}! You can't undo this action! Are you sure you want to delete this budget {show}?
+						</Modal.Body>
+						<Modal.Footer>
+							<Button variant="secondary" onClick={handleClose}>
+								Close
+							</Button>
+							<Button variant="danger" onClick={() => deleteBudget(show)}>
+								Yes, Delete
+							</Button>
+						</Modal.Footer>
+					</Modal>
 				</Row>
 			</Container>
 		</React.Fragment>
