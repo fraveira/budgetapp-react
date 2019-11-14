@@ -27,15 +27,16 @@ body {
 
 .previousBudgets {
 	text-align: center;
-	margin-top: 25px;
-	margin-bottom: 30px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 .overviewBudgetsContainer {
 	border: .2rem solid #ececec;
+	background-color: #ececec;
 	border-width: .2rem .2rem .2rem;
 	border-radius: 8px 8px 8px 8px;
-	padding: 10px 20px 10px 20px;
+	padding: 10px 15px 10px 20px;
 }
 
 .jumbotron {
@@ -47,10 +48,31 @@ body {
 }
 
 .incomeBtn {
-	margin-top: 10px;
-	margin-bottom: 10px;
+	margin-top: 35px;
+	margin-bottom: 35px;
 }
 
 .centerh5s {
 	text-align: center;
+}
+
+.btnToRight {
+	float: right;
+}
+
+.euroImg {
+	width: 20px;
+	text-align: center;
+	display: block;
+}
+
+.h4inoverview {
+	text-align: center;
+}
+
+.card-img-top {
+	width: 40%;
+	text-align: center;
+	padding-top: 5px;
+	margin: 0 auto;
 }

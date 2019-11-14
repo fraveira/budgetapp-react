@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Button, Tabs, Tab, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Button, Tabs, Tab, Modal, Card } from 'react-bootstrap';
 import axios from './axios';
 import { Link } from 'react-router-dom';
 
@@ -9,7 +9,6 @@ export default function Overview({ first, id }) {
 	const [ activeBudget, setActiveBudget ] = useState('');
 
 	const handleClose = () => setShow(false);
-	// const setActiveBudget = (budget) => budget({ activeBudget: budget });
 
 	const handleShow = (budget) => setShow(budget);
 
@@ -50,34 +49,43 @@ export default function Overview({ first, id }) {
 					</Col>
 					<Col />
 				</Row>
-				<Row>
-					<Col lg={1} />
-					<Col lg={10}>
-						<h3 className="previousBudgets">These are your previous budgets!</h3>
-					</Col>
-					<Col lg={1} />
-				</Row>
+				{budgets.length > 0 && (
+					<Row>
+						<Col lg={1} />
+						<Col lg={10}>
+							<h3 className="previousBudgets">These are your previous {budgets.length} budgets!</h3>
+						</Col>
+						<Col lg={1} />
+					</Row>
+				)}
 				<Row>
 					{budgets.map((budget) => (
 						<Col lg={4}>
 							<div className="overviewBudgetsContainer">
 								<Tabs defaultActiveKey="home" transition={false} id="noanim-tab-example">
 									<Tab eventKey="home" title="Overview">
-										<p>Total Income {budget.income1 + budget.income2}</p>
-										<p>Your budget with id {budget.id} is rendered!</p>
-										<p>Here we can display the pie chart</p>
-										<p>
-											{' '}
-											Total Expenses {' '}
-											{budget.outgo1 +
-												budget.outgo2 +
-												budget.outgo3 +
-												budget.outgo4 +
-												budget.outgo5 +
-												budget.outgo6 +
-												budget.outgo7 +
-												budget.outgo8}
-										</p>
+										<Card>
+											<Card.Img variant="top" src="/assets/euro.png" />
+											<Card.Body>
+												<Card.Title>
+													<h4 className="h4inoverview">Budget Id {budget.id}</h4>
+												</Card.Title>
+
+												<Button variant="info" className="incomeBtn" size="lg" block>
+													{' '}
+													Total Expenses {' '}
+													{budget.outgo1 +
+														budget.outgo2 +
+														budget.outgo3 +
+														budget.outgo4 +
+														budget.outgo5 +
+														budget.outgo6 +
+														budget.outgo7 +
+														budget.outgo8}{' '}
+													€
+												</Button>
+											</Card.Body>
+										</Card>
 									</Tab>
 
 									<Tab eventKey="income" title="Income">
@@ -104,7 +112,12 @@ export default function Overview({ first, id }) {
 										</Link>
 									</Col>
 									<Col lg={6} xs={12}>
-										<Button variant="danger" size="sm" onClick={() => handleShow(budget.id)}>
+										<Button
+											variant="danger"
+											className="btnToRight"
+											size="sm"
+											onClick={() => handleShow(budget.id)}
+										>
 											Delete budget
 										</Button>
 									</Col>
