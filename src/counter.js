@@ -98,7 +98,7 @@ const Counter = ({ totalIncome, totalOutgo, theIncome, theOutgo, userId, theBudg
 					{left == 0 && totalIncome > 0 && <h5 className="centerh5s">This is a Zero-Based Budget!</h5>}
 					{left == 0 &&
 					totalIncome > 0 && (
-						<Button variant="success" onClick={submitBudget} block>
+						<Button className="submitZero" variant="success" onClick={submitBudget} block>
 							Submit me!
 						</Button>
 					)}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Navbar, Form, InputGroup, FormControl } from 'react-bootstrap';
 import Counter from './counter';
-import { Button, Navbar } from 'react-bootstrap';
 
 export default function Creator({ first, last, id }) {
 	const [ income, setIncome ] = useState({});
@@ -41,53 +40,169 @@ export default function Creator({ first, last, id }) {
 			<Container>
 				<Row>
 					<Col md={7}>
-						<h2>This is your new budget!</h2>
-						<h3>INCOME for the month:</h3>
-						<h3>Salary 1</h3>
-						€{' '}
-						<input
-							placeholder="Insert Income"
-							type="number"
-							name="income1"
-							defaultValue=""
-							onKeyDown={keyCheckIncome}
-						/>
-						<p>{income.income1}</p>
-						<h3>Salary 2</h3>
-						€{' '}
-						<input
-							placeholder="Insert Income"
-							type="number"
-							name="income2"
-							defaultValue=""
-							onKeyDown={keyCheckIncome}
-						/>
-						<p>{income.income2}</p>
-						<h3>EXPENSES for the month:</h3>
-						<h3>Housing</h3>
-						€ <input placeholder="Insert Income" type="number" name="outgo1" onKeyDown={keyCheckExpenses} />
-						<p>{expenses.outgo1}</p>
-						<h3>Food</h3>
-						€ <input placeholder="Insert Income" type="number" name="outgo2" onKeyDown={keyCheckExpenses} />
-						<p>{expenses.outgo2}</p>
-						<h3>Transportation</h3>
-						€ <input placeholder="Insert Income" type="number" name="outgo3" onKeyDown={keyCheckExpenses} />
-						<p>{expenses.outgo3}</p>
-						<h3>Clothes</h3>
-						€ <input placeholder="Insert Income" type="number" name="outgo4" onKeyDown={keyCheckExpenses} />
-						<p>{expenses.outgo4}</p>
-						<h3>Insurance</h3>
-						€ <input placeholder="Insert Income" type="number" name="outgo5" onKeyDown={keyCheckExpenses} />
-						<p>{expenses.outgo5}</p>
-						<h3>Utilities</h3>
-						€ <input placeholder="Insert Income" type="number" name="outgo6" onKeyDown={keyCheckExpenses} />
-						<p>{expenses.outgo6}</p>
-						<h3>Travel</h3>
-						€ <input placeholder="Insert Income" type="number" name="outgo7" onKeyDown={keyCheckExpenses} />
-						<p>{expenses.outgo7}</p>
-						<h3>Health and Beauty</h3>
-						€ <input placeholder="Insert Income" type="number" name="outgo8" onKeyDown={keyCheckExpenses} />
-						<p>{expenses.outgo8}</p>
+						<Form className="leftColCreatorEditor">
+							<Row>
+								<Col>
+									<h3 className="h3increator">Income 1</h3>
+									<InputGroup className="formBetween">
+										<InputGroup.Prepend>
+											<InputGroup.Text id="inputGroupPrepend">€</InputGroup.Text>
+										</InputGroup.Prepend>
+										<Form.Control
+											placeholder="Press ENTER or TAB to save"
+											type="number"
+											name="income1"
+											defaultValue=""
+											onKeyDown={keyCheckIncome}
+										/>
+										<InputGroup.Append>
+											{income.income1 && <InputGroup.Text>{income.income1} €</InputGroup.Text>}
+										</InputGroup.Append>
+									</InputGroup>
+								</Col>
+								<Col>
+									<h3 className="h3increator">Income 2</h3>
+									<InputGroup>
+										<InputGroup.Prepend>
+											<InputGroup.Text id="inputGroupPrepend">€</InputGroup.Text>
+										</InputGroup.Prepend>
+										<Form.Control
+											placeholder="Press ENTER or TAB to save"
+											type="number"
+											name="income2"
+											defaultValue=""
+											onKeyDown={keyCheckIncome}
+										/>
+										<InputGroup.Append>
+											{income.income2 && <InputGroup.Text>{income.income2} €</InputGroup.Text>}
+										</InputGroup.Append>
+									</InputGroup>
+								</Col>
+							</Row>
+						</Form>
+						<Form>
+							<h2 className="regh2">EXPENSES</h2>
+							<h3 className="h3increator">Housing</h3>
+							<InputGroup className="mb-3">
+								<InputGroup.Prepend>
+									<InputGroup.Text>€</InputGroup.Text>
+								</InputGroup.Prepend>
+								<FormControl
+									placeholder="Press ENTER or TAB to save"
+									type="number"
+									name="outgo1"
+									onKeyDown={keyCheckExpenses}
+								/>
+								<InputGroup.Append>
+									{expenses.outgo1 && <InputGroup.Text>{expenses.outgo1} €</InputGroup.Text>}
+								</InputGroup.Append>
+							</InputGroup>
+							<h3 className="h3increator">Food</h3>
+							<InputGroup className="mb-3">
+								<InputGroup.Prepend>
+									<InputGroup.Text>€</InputGroup.Text>
+								</InputGroup.Prepend>
+								<FormControl
+									placeholder="Press ENTER or TAB to save"
+									type="number"
+									name="outgo2"
+									onKeyDown={keyCheckExpenses}
+								/>
+								<InputGroup.Append>
+									{expenses.outgo2 && <InputGroup.Text>{expenses.outgo2} €</InputGroup.Text>}
+								</InputGroup.Append>
+							</InputGroup>
+							<h3 className="h3increator">Transportation</h3>
+							<InputGroup className="mb-3">
+								<InputGroup.Prepend>
+									<InputGroup.Text>€</InputGroup.Text>
+								</InputGroup.Prepend>
+								<FormControl
+									placeholder="Press ENTER or TAB to save"
+									type="number"
+									name="outgo3"
+									onKeyDown={keyCheckExpenses}
+								/>
+								<InputGroup.Append>
+									{expenses.outgo3 && <InputGroup.Text>{expenses.outgo3} €</InputGroup.Text>}
+								</InputGroup.Append>
+							</InputGroup>
+							<h3 className="h3increator">Clothes</h3>
+							<InputGroup className="mb-3">
+								<InputGroup.Prepend>
+									<InputGroup.Text>€</InputGroup.Text>
+								</InputGroup.Prepend>
+								<FormControl
+									placeholder="Press ENTER or TAB to save"
+									type="number"
+									name="outgo4"
+									onKeyDown={keyCheckExpenses}
+								/>
+								<InputGroup.Append>
+									{expenses.outgo4 && <InputGroup.Text>{expenses.outgo4} €</InputGroup.Text>}
+								</InputGroup.Append>
+							</InputGroup>
+							<h3 className="h3increator">Insurance</h3>
+							<InputGroup className="mb-3">
+								<InputGroup.Prepend>
+									<InputGroup.Text>€</InputGroup.Text>
+								</InputGroup.Prepend>
+								<FormControl
+									placeholder="Press ENTER or TAB to save"
+									type="number"
+									name="outgo5"
+									onKeyDown={keyCheckExpenses}
+								/>
+								<InputGroup.Append>
+									{expenses.outgo5 && <InputGroup.Text>{expenses.outgo5} €</InputGroup.Text>}
+								</InputGroup.Append>
+							</InputGroup>
+							<h3 className="h3increator">Utilities</h3>
+							<InputGroup className="mb-3">
+								<InputGroup.Prepend>
+									<InputGroup.Text>€</InputGroup.Text>
+								</InputGroup.Prepend>
+								<FormControl
+									placeholder="Press ENTER or TAB to save"
+									type="number"
+									name="outgo6"
+									onKeyDown={keyCheckExpenses}
+								/>
+								<InputGroup.Append>
+									{expenses.outgo6 && <InputGroup.Text>{expenses.outgo6} €</InputGroup.Text>}
+								</InputGroup.Append>
+							</InputGroup>
+							<h3 className="h3increator">Travel</h3>
+							<InputGroup className="mb-3">
+								<InputGroup.Prepend>
+									<InputGroup.Text>€</InputGroup.Text>
+								</InputGroup.Prepend>
+								<FormControl
+									placeholder="Press ENTER or TAB to save"
+									type="number"
+									name="outgo7"
+									onKeyDown={keyCheckExpenses}
+								/>
+								<InputGroup.Append>
+									{expenses.outgo7 && <InputGroup.Text>{expenses.outgo7} €</InputGroup.Text>}
+								</InputGroup.Append>
+							</InputGroup>
+							<h3 className="h3increator">Health and Beauty</h3>
+							<InputGroup className="mb-3">
+								<InputGroup.Prepend>
+									<InputGroup.Text>€</InputGroup.Text>
+								</InputGroup.Prepend>
+								<FormControl
+									placeholder="Press ENTER or TAB to save"
+									type="number"
+									name="outgo8"
+									onKeyDown={keyCheckExpenses}
+								/>
+								<InputGroup.Append>
+									{expenses.outgo8 && <InputGroup.Text>{expenses.outgo8} €</InputGroup.Text>}
+								</InputGroup.Append>
+							</InputGroup>
+						</Form>
 					</Col>
 					<Col md={5}>
 						<Navbar sticky="top" className="stickyCounter">

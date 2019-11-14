@@ -5,6 +5,7 @@ body {
 	text-align: center;
 	margin-top: 25px;
 	margin-bottom: 25px;
+	color: #1256a5;
 }
 
 .creatorBtn {
@@ -48,8 +49,8 @@ body {
 }
 
 .incomeBtn {
-	margin-top: 35px;
-	margin-bottom: 35px;
+	margin-top: 25px;
+	margin-bottom: 25px;
 }
 
 .centerh5s {
@@ -67,6 +68,14 @@ body {
 }
 
 .h4inoverview {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+}
+
+.h3increator {
+	padding-top: 17px;
+	padding-bottom: 17px;
 	text-align: center;
 }
 
@@ -75,4 +84,17 @@ body {
 	text-align: center;
 	padding-top: 5px;
 	margin: 0 auto;
+}
+
+.leftColCreatorEditor {
+	padding-top: 80px;
+}
+
+.submitZero {
+	margin-top: 35px;
+}
+
+.formBetween {
+	margin-top: 10px;
+	margin-bottom: 25px;
 }

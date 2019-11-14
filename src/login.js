@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from './axios';
 import { Link } from 'react-router-dom';
-import { Button, Form, Col, Row, Container } from 'react-bootstrap';
+import { Button, Form, Col, Row, Container, Alert } from 'react-bootstrap';
 
 export default class Login extends React.Component {
 	constructor(props) {
@@ -40,7 +40,7 @@ export default class Login extends React.Component {
 	render() {
 		return (
 			<React.Fragment>
-				{this.state.error && <div className="error"> Oops! That was your fault</div>}
+				{this.state.error && <Alert variant="danger">Oops, something went wrong with your credentials</Alert>}
 				<Container>
 					<Row>
 						<Col />

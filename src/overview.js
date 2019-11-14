@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Button, Tabs, Tab, Modal, Card } from 'react-bootstrap';
+import { Container, Row, Col, Button, Tabs, Tab, Modal, Card, Table } from 'react-bootstrap';
 import axios from './axios';
 import { Link } from 'react-router-dom';
 
@@ -49,11 +49,21 @@ export default function Overview({ first, id }) {
 					</Col>
 					<Col />
 				</Row>
-				{budgets.length > 0 && (
+				{budgets.length > 1 && (
 					<Row>
 						<Col lg={1} />
 						<Col lg={10}>
 							<h3 className="previousBudgets">These are your previous {budgets.length} budgets!</h3>
+						</Col>
+						<Col lg={1} />
+					</Row>
+				)}
+
+				{budgets.length == 1 && (
+					<Row>
+						<Col lg={1} />
+						<Col lg={10}>
+							<h3 className="previousBudgets">This is your previous budget!</h3>
 						</Col>
 						<Col lg={1} />
 					</Row>
@@ -89,18 +99,101 @@ export default function Overview({ first, id }) {
 									</Tab>
 
 									<Tab eventKey="income" title="Income">
-										{budget.income1 && <p>Income 1 {budget.income1}</p>}
-										{budget.income2 !== 0 && <p>Income 2 {budget.income2}</p>}
+										<Table striped bordered hover>
+											<thead>
+												<tr>
+													<th>Concept</th>
+													<th>Amount</th>
+												</tr>
+											</thead>
+											<tbody>
+												{budget.income1 !== 0 &&
+												budget.income1 && (
+													<tr>
+														<td>Income 1</td>
+														<td>{budget.income1} €</td>
+													</tr>
+												)}
+
+												{budget.income2 !== 0 &&
+												budget.income2 && (
+													<tr>
+														<td>Income 2</td>
+														<td>{budget.income2} €</td>
+													</tr>
+												)}
+											</tbody>
+										</Table>
 									</Tab>
 									<Tab eventKey="expenses" title="Expenses">
-										{budget.outgo1 && <p>Housing {budget.outgo1}</p>}
-										{budget.outgo2 && <p>Food {budget.outgo2}</p>}
-										{budget.outgo3 && <p>Transportation {budget.outgo3}</p>}
-										{budget.outgo4 && <p>Clothes {budget.outgo4}</p>}
-										{budget.outgo5 && <p>Insurance {budget.outgo5}</p>}
-										{budget.outgo6 && <p>Utilities {budget.outgo6}</p>}
-										{budget.outgo7 && <p>Travel {budget.outgo7}</p>}
-										{budget.outgo8 && <p>Health and Beauty {budget.outgo8}</p>}
+										<Table striped bordered hover>
+											<thead>
+												<tr>
+													<th>Concept</th>
+													<th>Amount</th>
+												</tr>
+											</thead>
+											<tbody>
+												{budget.outgo1 !== 0 &&
+												budget.outgo1 && (
+													<tr>
+														<td>Housing</td>
+														<td>{budget.outgo1} €</td>
+													</tr>
+												)}
+												{budget.outgo2 !== 0 &&
+												budget.outgo2 && (
+													<tr>
+														<td>Food</td>
+														<td>{budget.outgo2} €</td>
+													</tr>
+												)}
+												{budget.outgo3 !== 0 &&
+												budget.outgo3 && (
+													<tr>
+														<td>Transportation</td>
+														<td>{budget.outgo3} €</td>
+													</tr>
+												)}
+												{budget.outgo4 !== 0 &&
+												budget.outgo4 && (
+													<tr>
+														<td>Clothes</td>
+														<td>{budget.outgo4} €</td>
+													</tr>
+												)}
+
+												{budget.outgo5 !== 0 &&
+												budget.outgo5 && (
+													<tr>
+														<td>Insurance</td>
+														<td>{budget.outgo5} €</td>
+													</tr>
+												)}
+												{budget.outgo6 !== 0 &&
+												budget.outgo6 && (
+													<tr>
+														<td>Utilities</td>
+														<td>{budget.outgo6} €</td>
+													</tr>
+												)}
+												{budget.outgo7 !== 0 &&
+												budget.outgo7 && (
+													<tr>
+														<td>Travel</td>
+														<td>{budget.outgo7} €</td>
+													</tr>
+												)}
+
+												{budget.outgo8 !== 0 &&
+												budget.outgo8 && (
+													<tr>
+														<td>Health and Beauty</td>
+														<td>{budget.outgo8} €</td>
+													</tr>
+												)}
+											</tbody>
+										</Table>
 									</Tab>
 								</Tabs>
 								<Row>
@@ -130,7 +223,7 @@ export default function Overview({ first, id }) {
 							<Modal.Title>Deleting your budget</Modal.Title>
 						</Modal.Header>
 						<Modal.Body>
-							Hey {first}! You can't undo this action! Are you sure you want to delete this budget {show}?
+							Hey {first}! You can't undo this action! Are you sure you want to delete this budget?
 						</Modal.Body>
 						<Modal.Footer>
 							<Button variant="secondary" onClick={handleClose}>
