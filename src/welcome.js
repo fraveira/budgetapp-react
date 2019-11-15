@@ -8,7 +8,9 @@ export default function Welcome() {
 	return (
 		<React.Fragment>
 			<Navbar bg="dark" variant="dark" expand="lg">
-				<Navbar.Brand href="/welcome">Budgematic</Navbar.Brand>
+				<Navbar.Brand href="/welcome" className="webLogo">
+					<img src="/assets/budgetactwhite.png" alt="BudgetACT logo" />
+				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="mr-auto">
@@ -22,7 +24,7 @@ export default function Welcome() {
 				<Row>
 					<Col />
 					<Col xs={6}>
-						<img src="/assets/reactlogo" />
+						<img className="homeLogos" src="/assets/budgetactblack.png" />
 						<h2 className="regh2">Start budgeting with us!</h2>
 					</Col>
 					<Col />

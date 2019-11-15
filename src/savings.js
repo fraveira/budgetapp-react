@@ -64,7 +64,7 @@ export default function Savings({ first, id }) {
 
 	return (
 		<React.Fragment>
-			<Row>
+			<Row className="rowto100">
 				<Col lg={2} />
 				<Col lg={8}>
 					<Button variant="success" size="lg" className="betterThanIDeseve" block onClick={handleShow}>
@@ -120,10 +120,10 @@ export default function Savings({ first, id }) {
 				</Col>
 				<Col lg={2} />
 			</Row>
-			<Col lg={2} />
-			<Col lg={8}>
+			<Col lg={1} />
+			<Col lg={10}>
 				<Row>
-					<CardDeck>
+					<CardDeck className="decksSavings">
 						{savings.map((saving) => (
 							<Card>
 								<Card.Img variant="top" />
@@ -131,29 +131,36 @@ export default function Savings({ first, id }) {
 									<Card.Title>{saving.savingsname}</Card.Title>
 									<Card.Text>Your savings goal: {saving.goal} €</Card.Text>
 									<Card.Text>You have saved so far {saving.reached} €</Card.Text>
-									<Form.Control
-										placeholder="ENTER to update"
-										className="progressBarSaving"
-										type="number"
-										name={saving.id}
-										defaultValue=""
-										onKeyDown={keyUpdateSavings}
-									/>
-
-									<ProgressBar
-										animated
-										variant="success"
-										className="progressBarSaving"
-										now={saving.reached / saving.goal * 100}
-										label={`${Math.round(saving.reached / saving.goal * 100)}%`}
-									/>
+									{saving.reached == saving.goal ? (
+										<Button className="incomeBtn" variant="success" block>
+											You reached your goal!
+										</Button>
+									) : (
+										<React.Fragment>
+											<Form.Control
+												placeholder="ENTER to update"
+												className="progressBarSaving"
+												type="number"
+												name={saving.id}
+												defaultValue=""
+												onKeyDown={keyUpdateSavings}
+											/>
+											<ProgressBar
+												animated
+												variant="success"
+												className="progressBarSaving"
+												now={saving.reached / saving.goal * 100}
+												label={`${Math.round(saving.reached / saving.goal * 100)}%`}
+											/>
+										</React.Fragment>
+									)}
 								</Card.Body>
 							</Card>
 						))}
 					</CardDeck>
 				</Row>
 			</Col>
-			<Col lg={2} />
+			<Col lg={1} />
 		</React.Fragment>
 	);
 }

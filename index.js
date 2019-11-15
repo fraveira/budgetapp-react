@@ -313,9 +313,6 @@ app.post('/api/updatesaving/:savingId', async (req, res) => {
 	let userId = req.session.userId;
 	let savingId = req.params.savingId;
 	let reachedAmount = Number(req.body.updatedReached);
-	console.log('Reached amount is', reachedAmount);
-	console.log('Req params', req.params.savingId);
-	console.log('User id is', userId);
 	db
 		.updateSaving(userId, savingId, reachedAmount)
 		.then(function({ rows }) {
