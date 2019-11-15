@@ -329,6 +329,23 @@ app.post('/api/updatesaving/:savingId', async (req, res) => {
 
 // POSTing saving funds.
 
+app.post('/api/newsaving/', async (req, res) => {
+	let userId = req.session.userId;
+	let newgoal = req.body.newgoal;
+	let newname = req.body.newname;
+	let newreached = req.body.newreached;
+
+	db
+		.postSaving(userId, newname, newgoal, newreached)
+		.then(function({ rows }) {
+			res.json({ success: true });
+		})
+		.catch(function(err) {
+			console.log(err);
+			res.sendStatus(500);
+		});
+});
+
 // Logout route:
 
 app.get('/logout', function(req, res) {

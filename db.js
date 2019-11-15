@@ -142,7 +142,7 @@ module.exports.deleteExpenses = (budgetId) => {
 
 module.exports.getAllSavings = (id) => {
 	return db.query(
-		`SELECT id, owner, savingsname, reached, goal, created_at FROM savings WHERE owner = $1 LIMIT 4 ORDER BY id`,
+		`SELECT id, owner, savingsname, reached, goal, created_at FROM savings WHERE owner = $1 ORDER BY created_at DESC LIMIT 3 `,
 		[ id ]
 	);
 };
@@ -156,4 +156,13 @@ module.exports.updateSaving = (id, savingId, reachedAmount) => {
     RETURNING reached;`,
 		[ id, savingId, reachedAmount ]
 	);
+};
+
+module.exports.postSaving = (userId, newname, newgoal, newreached) => {
+	return db.query(`INSERT INTO savings (owner, savingsname, goal, reached) values ($1, $2, $3, $4) RETURNING id;`, [
+		userId,
+		newname,
+		newgoal,
+		newreached
+	]);
 };
