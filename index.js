@@ -146,7 +146,6 @@ app.get('/user', async (req, res) => {
 });
 
 // Submitting budget route:
-// WE need to tweak some stuff to make the posting after edit possible.
 
 app.post('/api/newbudget/:userId', (req, res) => {
 	let userId = Number(req.session.userId);
@@ -275,18 +274,14 @@ app.get('/api/edit/:budgetId', async (req, res) => {
 app.delete('/api/delete/:budgetId', (req, res) => {
 	let userId = req.session.userId;
 	const budgetor = Number(req.params.budgetId);
-	console.log('This is the budget we are trying to delete', budgetor);
 
 	db
 		.deleteIncome(budgetor)
 		.then(function({ rows }) {})
 		.then(() => {
-			console.log('This is the budget we are tyring to delete, lvl down', budgetor);
 			db.deleteExpenses(budgetor).then((data) => {});
 		})
 		.then(() => {
-			console.log('This is the budget we are tyring to delete, 2lvl down', budgetor);
-			console.log('This is the userId we are tyring to delete, 2lvl down', userId);
 			db.deleteBudget(userId, budgetor).then((data) => {
 				res.json({ success: true });
 			});
@@ -296,6 +291,43 @@ app.delete('/api/delete/:budgetId', (req, res) => {
 			res.sendStatus(500);
 		});
 });
+
+// GETting saving funds ROUTE:
+
+app.get('/api/savings/:userId', async (req, res) => {
+	let userId = req.session.userId;
+	db
+		.getAllSavings(userId)
+		.then(function({ rows }) {
+			res.json(rows);
+		})
+		.catch(function(err) {
+			console.log(err);
+			res.sendStatus(500);
+		});
+});
+
+// EDITing saving funds.
+
+app.post('/api/updatesaving/:savingId', async (req, res) => {
+	let userId = req.session.userId;
+	let savingId = req.params.savingId;
+	let reachedAmount = Number(req.body.updatedReached);
+	console.log('Reached amount is', reachedAmount);
+	console.log('Req params', req.params.savingId);
+	console.log('User id is', userId);
+	db
+		.updateSaving(userId, savingId, reachedAmount)
+		.then(function({ rows }) {
+			res.json({ success: true });
+		})
+		.catch(function(err) {
+			console.log(err);
+			res.sendStatus(500);
+		});
+});
+
+// POSTing saving funds.
 
 // Logout route:
 

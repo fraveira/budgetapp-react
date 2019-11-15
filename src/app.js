@@ -5,6 +5,7 @@ import Header from './header';
 import Overview from './overview';
 import Creator from './creator';
 import Editor from './editor';
+import Savings from './savings';
 
 export class App extends React.Component {
 	constructor() {
@@ -58,6 +59,19 @@ export class App extends React.Component {
 									match={props.match}
 									history={props.history}
 									id={this.state.id}
+								/>
+							)}
+						/>
+						<Route
+							exact
+							path="/app/savingfunds/"
+							render={(props) => (
+								<Savings
+									key={props.match.url}
+									match={props.match}
+									history={props.history}
+									id={this.state.id}
+									first={this.state.first}
 								/>
 							)}
 						/>

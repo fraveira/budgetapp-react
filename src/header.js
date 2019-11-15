@@ -12,9 +12,9 @@ export default function Header({ first }) {
 						<Nav.Link href="/app/overview">Home</Nav.Link>
 						<Nav.Link>Ready to budget, {first}? </Nav.Link>
 						<NavDropdown title="Control Panel" id="basic-nav-dropdown">
-							<NavDropdown.Item href="#action/3.1">Saving Funds</NavDropdown.Item>
-							<NavDropdown.Item href="#action/3.2">Debts</NavDropdown.Item>
-							<NavDropdown.Item href="#action/3.3">Settings</NavDropdown.Item>
+							<NavDropdown.Item href="/app/savingfunds">Saving Funds</NavDropdown.Item>
+							<NavDropdown.Item href="/app/savingfunds">Debts</NavDropdown.Item>
+							<NavDropdown.Item href="/app/overview">Settings</NavDropdown.Item>
 							<NavDropdown.Divider />
 							<NavDropdown.Item href="/logout">Logout</NavDropdown.Item>
 						</NavDropdown>

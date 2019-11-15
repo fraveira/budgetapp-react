@@ -137,3 +137,23 @@ module.exports.deleteExpenses = (budgetId) => {
 		[ budgetId ]
 	);
 };
+
+// SAVINGS ROUTES:
+
+module.exports.getAllSavings = (id) => {
+	return db.query(
+		`SELECT id, owner, savingsname, reached, goal, created_at FROM savings WHERE owner = $1 LIMIT 4 ORDER BY id`,
+		[ id ]
+	);
+};
+
+module.exports.updateSaving = (id, savingId, reachedAmount) => {
+	return db.query(
+		`
+    UPDATE savings  
+    SET reached=$3
+    WHERE owner=$1 AND id=$2
+    RETURNING reached;`,
+		[ id, savingId, reachedAmount ]
+	);
+};
