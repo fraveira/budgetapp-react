@@ -68,7 +68,7 @@ export default function Savings({ first, id }) {
 				<Col lg={2} />
 				<Col lg={8}>
 					<Button variant="success" size="lg" className="betterThanIDeseve" block onClick={handleShow}>
-						Create a new Saving Fund
+						Hey {first}, create a new Saving Fund!
 					</Button>
 
 					<Modal show={show} onHide={handleClose}>
@@ -129,8 +129,12 @@ export default function Savings({ first, id }) {
 								<Card.Img variant="top" />
 								<Card.Body>
 									<Card.Title>{saving.savingsname}</Card.Title>
-									<Card.Text>Your savings goal: {saving.goal} €</Card.Text>
-									<Card.Text>You have saved so far {saving.reached} €</Card.Text>
+									<Card.Text>
+										Your savings goal: <strong>{saving.goal} €</strong>
+									</Card.Text>
+									<Card.Text>
+										You have saved so far <strong>{saving.reached} €</strong>
+									</Card.Text>
 									{saving.reached == saving.goal ? (
 										<Button className="incomeBtn" variant="success" block>
 											You reached your goal!

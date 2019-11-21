@@ -370,6 +370,6 @@ app.get('*', function(req, res) {
 });
 // leave as it is.
 
-app.listen(8080, function() {
+app.listen(process.env.PORT || 8080, function() {
 	console.log("I'm listening.");
 });
