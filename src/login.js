@@ -66,10 +66,23 @@ export default class Login extends React.Component {
 									onChange={(e) => this.handleChange(e)}
 								/>
 							</Form.Group>
-							<Button variant="success" type="submit" size="lg" onClick={() => this.submit()}>
-								Log in
-							</Button>
-							<Link to="/"> or Register</Link>
+							<Row>
+								<Col />
+								<Col xs={4}>
+									<Button variant="success" type="submit" size="lg" onClick={() => this.submit()}>
+										Log in
+									</Button>
+								</Col>
+								<Col xs={4}>
+									<Link to="/">
+										{' '}
+										<Button variant="info" size="sm">
+											or Register
+										</Button>
+									</Link>
+								</Col>
+								<Col />
+							</Row>
 						</Col>
 						<Col />
 					</Row>

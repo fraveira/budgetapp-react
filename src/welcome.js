@@ -24,7 +24,9 @@ export default function Welcome() {
 				<Row>
 					<Col />
 					<Col xs={6}>
-						<img className="homeLogos" src="/assets/budgetactblack.png" />
+						<div className="homeLogos">
+							<img src="/assets/budgetactblack.png" />
+						</div>
 						<h2 className="regh2">Start budgeting with us!</h2>
 					</Col>
 					<Col />

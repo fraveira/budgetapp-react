@@ -97,7 +97,9 @@ export default class Register extends React.Component {
 								</Col>
 								<Col xs={4}>
 									<Link to="/login">
-										<p>or Sign In</p>
+										<Button variant="info" size="sm">
+											or Sign In
+										</Button>
 									</Link>
 								</Col>
 								<Col />
