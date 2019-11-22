@@ -220,7 +220,7 @@ export default function Editor(props) {
 										{expenses.outgo7 && <InputGroup.Text>{expenses.outgo7} €</InputGroup.Text>}
 									</InputGroup.Append>
 								</InputGroup>
-								<h3 className="h3increator">Health and Beauty</h3>
+								<h3 className="h3increator">Savings and Debts</h3>
 								<InputGroup className="mb-3">
 									<InputGroup.Prepend>
 										<InputGroup.Text>€</InputGroup.Text>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Navbar, Form, InputGroup, FormControl } from 'react-bootstrap';
+import { Container, Row, Col, Navbar, Form, InputGroup, FormControl, Modal, Button } from 'react-bootstrap';
+import axios from './axios';
 import Counter from './counter';
 
 export default function Creator({ first, last, id }) {
@@ -7,6 +8,27 @@ export default function Creator({ first, last, id }) {
 	const [ expenses, setExpenses ] = useState({});
 	const [ sumIncome, setSumIncome ] = useState(0);
 	const [ sumExpenses, setSumExpenses ] = useState(0);
+	// For the help modal
+	const [ show, setShow ] = useState(false);
+	const handleClose = () => setShow(false);
+
+	useEffect(
+		() => {
+			if (!id) {
+				return;
+			}
+			(async () => {
+				await axios.get(`/api/initialstatus/${id}`).then(({ data }) => {
+					if (data.success == true) {
+						setShow(false);
+					} else {
+						setShow(true);
+					}
+				});
+			})();
+		},
+		[ id ]
+	);
 
 	useEffect(
 		() => {
@@ -37,6 +59,39 @@ export default function Creator({ first, last, id }) {
 
 	return (
 		<React.Fragment>
+			<Modal show={show} onHide={handleClose}>
+				<Modal.Header closeButton>
+					<Modal.Title>Need help?</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<h5>Instructions to create your first Zero-Based Budget!</h5>
+					<p>A Zero-Based budget is a bit special: </p>
+					<p>
+						- your income minus your expenses <strong>MUST equal zero.</strong>{' '}
+					</p>
+					<p>
+						- that means you have to <strong>allocate EVERY EURO</strong> inside a category
+					</p>
+					<p>- the program won't let you save the budget otherwise</p>
+					<p>
+						- if there's some money you don't want to spend, allocate it inside the{' '}
+						<strong>Savings Category!</strong>
+					</p>
+					<p>
+						- if you miss any important category, rest assured I am working on adding custom categories in
+						the near future
+					</p>
+					<a href="https://www.youtube.com/watch?v=PvErAzTOwk4">Learn more here</a>
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleClose}>
+						Close
+					</Button>
+					<Button variant="primary" onClick={handleClose}>
+						Let me budget
+					</Button>
+				</Modal.Footer>
+			</Modal>
 			<Container>
 				<Row>
 					<Col md={7}>
@@ -187,7 +242,7 @@ export default function Creator({ first, last, id }) {
 									{expenses.outgo7 && <InputGroup.Text>{expenses.outgo7} €</InputGroup.Text>}
 								</InputGroup.Append>
 							</InputGroup>
-							<h3 className="h3increator">Health and Beauty</h3>
+							<h3 className="h3increator">Savings and Debts</h3>
 							<InputGroup className="mb-3">
 								<InputGroup.Prepend>
 									<InputGroup.Text>€</InputGroup.Text>

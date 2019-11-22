@@ -5,7 +5,7 @@ CREATE TABLE savings
 (
     id SERIAL PRIMARY KEY,
     owner INT NOT NULL REFERENCES users(id),
-    savinsname TEXT,
+    savingsname TEXT,
     reached INT,
     goal INT,
     created_at TIMESTAMP NOT NULL DEFAULT NOW()

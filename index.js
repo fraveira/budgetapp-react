@@ -343,6 +343,26 @@ app.post('/api/newsaving/', async (req, res) => {
 		});
 });
 
+// Know if user has a budget or not.
+
+app.get('/api/initialstatus/:userId', async (req, res) => {
+	let userId = req.session.userId;
+
+	db
+		.getRecentBudgets(userId)
+		.then(function({ rows }) {
+			if (rows.length !== 0) {
+				res.json({ success: true });
+			} else {
+				res.json({ success: false });
+			}
+		})
+		.catch(function(err) {
+			console.log(err);
+			res.sendStatus(500);
+		});
+});
+
 // Logout route:
 
 app.get('/logout', function(req, res) {
