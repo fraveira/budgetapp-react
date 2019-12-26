@@ -1,6 +1,6 @@
 # Budgeting App
 
-BudgetACT is a Zero-Based budgeting website that allows logged-in users to plan their monthly expenses, create Saving Funds, and much more...
+BudgetACT is a Zero-Based budgeting app/website that allows logged-in users to plan their monthly expenses, create Saving Funds, and much more...
 
 ## Technologies used:
 
