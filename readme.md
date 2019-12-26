@@ -2,7 +2,7 @@
 
 BudgetACT is a Zero-Based budgeting website that allows logged-in users to plan their monthly expenses, create Saving Funds, and much more...
 
-## Technologies used
+## Technologies used:
 
 Built with React (Hooks and Webpack), Bootstrap 4, NodeJS and Postgresql.
 
